@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LeaveRequest.Repositories.Data
 {
-    public class AccountRepository : GeneralRepository<Account, MyContext, string>
+    public class RoleRepository : GeneralRepository<Role, MyContext, string>
     {
         private readonly MyContext myContext;
 
-        public AccountRepository(MyContext myContext) : base (myContext)
+        public RoleRepository(MyContext myContext) : base(myContext)
         {
 
         }
