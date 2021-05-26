@@ -15,8 +15,17 @@ namespace LeaveRequest.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string ReasonRequest { get; set; }
-        public string NIK_Employee { get; set; }
+        public Employee Employee { get; set; }
         public string Notes { get; set; }
-        public enum StatusRequest { get; set; }
+        public StatusRequest StatusRequest { get; set; }
+    }
+
+    public enum StatusRequest
+    {
+        Waiting,
+        ApprovedByHRD,
+        RejectByHRD,
+        ApprovedByManager,
+        RejectByManager
     }
 }
