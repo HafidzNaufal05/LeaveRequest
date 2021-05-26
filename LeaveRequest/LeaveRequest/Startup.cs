@@ -1,4 +1,5 @@
 using LeaveRequest.Context;
+using LeaveRequest.Repositories.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,15 @@ namespace LeaveRequest
         {
             services.AddControllers();
             services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
+
+            services.AddScoped<AccountRepository>();
+            services.AddScoped<DepartmentRepository>();
+            services.AddScoped<EmployeeRepository>();
+            services.AddScoped<EmployeeRoleRepository>();
+            services.AddScoped<NationalHolidayRepository>();
+            services.AddScoped<ParameterRepository>();
+            services.AddScoped<RequestRepository>();
+            services.AddScoped<RoleRepository>();
             
         }
 
