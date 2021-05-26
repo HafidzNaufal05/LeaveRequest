@@ -23,9 +23,12 @@ namespace LeaveRequest.Models
         public int RemainingQuota { get; set; }
         #nullable enable
         public string? NIK_Manager { get; set; }
-        public int Department_Id { get; set; }
-
+        public Department Department{ get; set; }
+        public Account Account { get; set; }
         public virtual Employee Manager { get; set; }
+
+        public ICollection<EmployeeRole> EmployeeRoles { get; set; }
+        public ICollection<Request> Requests { get; set; }
 
 
     }
