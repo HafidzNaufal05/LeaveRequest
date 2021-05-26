@@ -32,9 +32,9 @@ namespace LeaveRequest
             services.AddScoped<ParameterRepository>();
             services.AddScoped<RequestRepository>();
             services.AddScoped<RoleRepository>();
-            
         }
 
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
