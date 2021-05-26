@@ -17,6 +17,15 @@ namespace LeaveRequest.Models
         public string ReasonRequest { get; set; }
         public Employee Employee { get; set; }
         public string Notes { get; set; }
-        public enum StatusRequest { get; set; }
+        public StatusRequest StatusRequest { get; set; }
+    }
+
+    public enum StatusRequest
+    {
+        Waiting,
+        ApprovedByHRD,
+        RejectByHRD,
+        ApprovedByManager,
+        RejectByManager
     }
 }

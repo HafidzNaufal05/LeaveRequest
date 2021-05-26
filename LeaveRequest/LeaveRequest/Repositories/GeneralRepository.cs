@@ -15,14 +15,12 @@ namespace LeaveRequest.Repositories
         private readonly MyContext myContext;
         private DbSet<Entity> entities;
 
-        //constructor
         public GeneralRepository(MyContext myContext)
         {
             this.myContext = myContext;
             entities = myContext.Set<Entity>();
         }
 
-        //create data
         public int Create(Entity entity)
         {
             if (entity == null)
@@ -37,7 +35,6 @@ namespace LeaveRequest.Repositories
             }
         }
 
-        //delete data
         public int Delete(Id id)
         {
             if (entities == null)
@@ -53,19 +50,16 @@ namespace LeaveRequest.Repositories
             }
         }
 
-        //get all data
         public IEnumerable<Entity> GetAll()
         {
             return entities.AsEnumerable();
         }
 
-        //get data by id
         public Entity GetById(Id id)
         {
             return entities.Find(id);
         }
 
-        //update data
         public int Update(Entity entity)
         {
             if (entity == null)

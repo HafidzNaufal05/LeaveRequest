@@ -8,6 +8,7 @@ using LeaveRequest.Base.Controller;
 using LeaveRequest.Models;
 using LeaveRequest.Repositories.Data;
 using Microsoft.Extensions.Configuration;
+using LeaveRequest.Context;
 
 namespace LeaveRequest.Controllers
 {
@@ -16,7 +17,7 @@ namespace LeaveRequest.Controllers
     public class AccountController : BaseController<Account, AccountRepository, string>
     {
         private readonly AccountRepository accountRepository;
-        private readonly EmployeeRepository employeeRepository;
+        private MyContext myContext;
         private IConfiguration configuration;
 
         public AccountController(AccountRepository accountRepository, EmployeeRepository employeeRepository, IConfiguration configuration) : base(accountRepository)
