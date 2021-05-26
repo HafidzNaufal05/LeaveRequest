@@ -12,7 +12,7 @@ namespace LeaveRequest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RoleController : BaseController<Role, RoleRepository, int>
+    public class RoleController : BaseController<Role, RoleRepository, string>
     {
         public RoleController(RoleRepository roleRepository) : base(roleRepository)
         {

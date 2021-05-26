@@ -12,7 +12,7 @@ namespace LeaveRequest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RequestController : BaseController<Request, RequestRepository, int>
+    public class RequestController : BaseController<Request, RequestRepository, string>
     {
         private readonly RequestRepository requestRepository;
         public RequestController(RequestRepository requestRepository) : base(requestRepository)
