@@ -31,8 +31,7 @@ namespace LeaveRequest.Context
             modelBuilder.Entity<Employee>()
                 .HasOne(Employee => Employee.Manager)
                 .WithMany()
-                .HasForeignKey(Manager => Manager.NIK_Manager)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(Manager => Manager.NIK_Manager);
 
             //Employe-EmployeeRole
             modelBuilder.Entity<EmployeeRole>()

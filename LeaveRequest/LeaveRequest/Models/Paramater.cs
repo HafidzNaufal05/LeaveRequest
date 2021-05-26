@@ -5,10 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LeaveRequest.Models
+namespace LeaveRequest.Context
 {
     [Table("TB_M_Parameter")]
-    public class Parameter
+    public class Paramater
     {
         [Key]
         public int Id { get; set; }
