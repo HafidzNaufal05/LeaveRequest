@@ -1,5 +1,8 @@
 using LeaveRequest.Context;
+using LeaveRequest.Middleware;
+using LeaveRequest.Repositories;
 using LeaveRequest.Repositories.Data;
+using LeaveRequest.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +24,9 @@ namespace LeaveRequest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
 
             services.AddScoped<AccountRepository>();
@@ -32,7 +37,11 @@ namespace LeaveRequest
             services.AddScoped<ParameterRepository>();
             services.AddScoped<RequestRepository>();
             services.AddScoped<RoleRepository>();
-            
+
+            services.AddScoped<IGenericDapper, GeneralDapper>();
+
+            services.AddTokenAuthentication(Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +56,7 @@ namespace LeaveRequest
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
