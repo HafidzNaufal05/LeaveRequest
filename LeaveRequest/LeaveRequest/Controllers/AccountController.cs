@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -83,6 +84,83 @@ namespace LeaveRequest.Controllers
             }
 
             return BadRequest("Failed to login");
+
+        }
+
+        /*[HttpPost("ChangePassword")]
+        public ActionResult ChangePassword(string email, string oldPassword, string newPassword, string confrimPassword)
+        {
+            var emailCheck = myContext.Accounts.SingleOrDefault(e => e.Employee.Email == email);
+            var passwordCheck = Hashing.ValidatePassword(oldPassword, emailCheck.Password);
+
+            if (emailCheck != null)
+            {
+                if (passwordCheck)
+                {
+                    var NewPassword = Hashing.HashPassword(newPassword);
+                    emailCheck.Password = NewPassword;
+                    var Save = myContext.SaveChanges();
+                    if(Save > 0)
+                    {
+                        return Ok(new { message = "Password Changed", status = "Ok" });
+                    }
+                }
+                else
+                {
+                    return StatusCode(404, new { status = "404", message = "Wrong password" });
+                }
+            }
+            return NotFound();
+        }*/
+
+        //[HttpPost("ForgotPassword")]
+        //public ActionResult ForgotPassword(string email)
+        //{
+        //    string resetCode = Guid.NewGuid().ToString();
+            
+        //    var acc = myContext.Employees.Include(u => u.Account).Where(a => a.Email == email).FirstOrDefault();
+        //    if (acc.Email == email)
+        //    {
+        //        var password = Hashing.HashPassword(resetCode);
+        //        acc.Account.Password = password;
+        //        var result = myContext.SaveChanges();
+        //        sendEmail.
+        //        sendEmail.SendForgotPassword2(resetCode, email);
+        //        return result;
+        //        /*var sendEmail = new SendEmail(myContext);
+        //        sendEmail.SendForgotPassword(email);
+        //        return Ok("Please Check Your Email");*/
+        //    }
+        //    else
+        //    {
+        //        return NotFound("Email Not Found");
+        //    }
+        //}
+
+        [HttpPost("ResetPassword")]
+        //[Authorize]
+        public ActionResult ResetPassword(string email, string newPassword, string confirmPassword)
+        {
+            var acc = myContext.Employees.SingleOrDefault(e => e.Email == email);
+            var password = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == email);
+            if (acc.Email == email)
+            {
+                if (newPassword == confirmPassword)
+                {
+                    password.Password = Hashing.HashPassword(newPassword);
+                    var save = myContext.SaveChanges();
+                    if (save > 0)
+                    {
+                        return Ok("Password Berhasil Dirubah");
+                    }
+                }
+                else
+                {
+                    return BadRequest("Your Password is incorrect");
+                }
+            }
+
+            return NotFound("Email Not Found");
 
         }
     }
