@@ -1,6 +1,7 @@
-﻿using LeaveRequest.Base.Controller;
+using LeaveRequest.Base.Controller;
 using LeaveRequest.Models;
 using LeaveRequest.Repositories.Data;
+using LeaveRequest.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,6 +21,11 @@ namespace LeaveRequest.Controllers
             this.requestRepository = requestRepository;
         }
 
+        [HttpPost("requestCuti")]
+        public ActionResult RequestCuti(RequestVM requestVM)
+        {
+            return Ok(requestRepository.Request(requestVM));
+        }
 
     }
 }
