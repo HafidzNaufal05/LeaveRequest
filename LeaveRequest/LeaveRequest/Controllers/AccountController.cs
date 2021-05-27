@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using LeaveRequest.Base.Controller;
 using LeaveRequest.Context;
 using LeaveRequest.Handler;
