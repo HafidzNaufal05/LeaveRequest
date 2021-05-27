@@ -17,7 +17,9 @@ namespace LeaveRequest.ViewModels
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public DateTime JoinDate { get; set; }
+        public int RemainingQuota { get; set; }
         public string DepartmentId { get; set; }
+        public string NIK_Manager { get; set; }
         public string RoleId { get; set; }
         public string Password { get; set; }
     }

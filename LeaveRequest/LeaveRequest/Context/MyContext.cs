@@ -12,7 +12,7 @@ namespace LeaveRequest.Context
         public MyContext()
         {
         }
-        public MyContext(DbContextOptions<MyContext>options): base(options)
+        public MyContext(DbContextOptions<MyContext> options) : base(options)
         {
         }
 
@@ -24,6 +24,7 @@ namespace LeaveRequest.Context
         public DbSet<Parameter> Parameters { get; set; }
         public DbSet<Request> Requests { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<SendEmail> SendEmails {get; set;}
 
         protected override void OnModelCreating (ModelBuilder modelBuilder)
         {
