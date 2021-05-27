@@ -5,15 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LeaveRequest.Context
+namespace LeaveRequest.Models
 {
-    [Table("TB_M_Parameter")]
-    public class Paramater
+    [Table("TB_M_SendEmail")]
+    public class SendEmail
     {
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Value { get; set; }
-        public string Notes { get; set; }
+        public string Value { get; set; }
     }
 }

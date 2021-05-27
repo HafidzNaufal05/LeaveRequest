@@ -14,7 +14,13 @@ namespace LeaveRequest.Repositories.Data
 
         public ParameterRepository(MyContext myContext) : base(myContext)
         {
+            this.myContext = myContext;
+        }
 
+        public Parameter getByName(string name)
+        {
+            var parameter = myContext.Parameters.Where(p => p.Name == name).FirstOrDefault();
+            return parameter;
         }
     }
 }
