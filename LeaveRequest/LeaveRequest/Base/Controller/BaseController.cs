@@ -1,4 +1,4 @@
-﻿using LeaveRequest.Repositories.Interfaces;
+using LeaveRequest.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,7 +25,7 @@ namespace LeaveRequest.Base.Controller
         public ActionResult Get()
         {
             var data = repository.GetAll();
-            return (data != null) ? (ActionResult)Ok(new { data = data, status = "Ok" }) : StatusCode(500, new { data = data, status = "Internal Server Error", errorMessage = "Cannot get the data" });
+            return (data != null) ? (ActionResult)Ok(new { data = data, status = "Done" }) : StatusCode(500, new { data = data, status = "Internal Server Error", errorMessage = "Cannot get the data" });
         }
 
         [HttpGet("{id}")]
