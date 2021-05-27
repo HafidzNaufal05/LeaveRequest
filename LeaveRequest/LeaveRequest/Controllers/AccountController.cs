@@ -30,16 +30,18 @@ namespace LeaveRequest.Controllers
     public class AccountController : ControllerBase
     {
         private AccountRepository accountRepository;
+        private ParameterRepository parameterRepository;
         private MyContext myContext;
         private IConfiguration configuration;
         private readonly IGenericDapper dapper;
 
-        public AccountController(IConfiguration configuration, AccountRepository accountRepository, MyContext myContext, IGenericDapper dapper)
+        public AccountController(IConfiguration configuration, AccountRepository accountRepository, MyContext myContext, IGenericDapper dapper, ParameterRepository parameterRepository)
         {
             this.configuration = configuration;
             this.accountRepository = accountRepository;
             this.myContext = myContext;
             this.dapper = dapper;
+            this.parameterRepository = parameterRepository;
         }
 
         [Route("register")]
@@ -47,6 +49,24 @@ namespace LeaveRequest.Controllers
         public ActionResult Registration(RegisterVM registerVM)
         {
             var HashPassword = Hashing.HashPassword(registerVM.Password);
+
+            DateTime DateJoin = registerVM.JoinDate;
+            DateTime Today = DateTime.Today;
+            TimeSpan ts = new TimeSpan();
+            ts = Today.Subtract(DateJoin);
+            Parameter parameter = new Parameter();
+            if (ts.Days < 365)
+            {
+                parameter = parameterRepository.getByName("Dibawah satu tahun");
+            }
+            else if (ts.Days >= 365 && ts.Days < 1826)
+            {
+                parameter = parameterRepository.getByName("Diatas satu tahun");
+            }
+            else if (ts.Days >= 1826)
+            {
+                parameter = parameterRepository.getByName("Diatas lima tahun");
+            }
 
             var dbparams = new DynamicParameters();
             dbparams.Add("NIK", registerVM.NIK, DbType.String);
@@ -59,7 +79,9 @@ namespace LeaveRequest.Controllers
             dbparams.Add("PhoneNumber", registerVM.PhoneNumber, DbType.String);
             dbparams.Add("Email", registerVM.Email, DbType.String);
             dbparams.Add("JoinDate", registerVM.JoinDate, DbType.DateTime);
+            dbparams.Add("RemainingQuota", parameter.Value, DbType.Int32);
             dbparams.Add("DepartmentId", registerVM.DepartmentId, DbType.String);
+            dbparams.Add("NIK_Manager", registerVM.NIK_Manager, DbType.String);
             dbparams.Add("Role", registerVM.RoleId, DbType.String);
             dbparams.Add("Password", HashPassword, DbType.String);
 
