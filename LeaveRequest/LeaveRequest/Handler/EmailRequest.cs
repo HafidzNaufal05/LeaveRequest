@@ -31,7 +31,7 @@ namespace LeaveRequest.Handler
             smtp.Send(SendEmail.Name, employee.Email, "Leave Request", "\nThank You For You Request. Your Request Is Being Processed.");
         }
 
-        public void SendRequestHRD(string url, string token, Employee employee)
+        public void SendRequestHRD(Employee employee)
         {
             var SendEmail = myContext.SendEmails.Find(1);
 
@@ -42,10 +42,10 @@ namespace LeaveRequest.Handler
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.Credentials = new NetworkCredential(SendEmail.Name, SendEmail.Value);
 
-            smtp.Send(SendEmail.Name, employee.Email, "Approval Leave Request From HRD ", "\n, Employee Has Been Request. Please Approve Or Reject Employee Request ");
+            smtp.Send(SendEmail.Name, employee.Email, "Approval Leave Request", "\n, Employee Has Been Request. Please Approve Or Reject Employee Request ");
         }
 
-        public void SendApproveHRD(string url, string token, Employee employee)
+        public void SendApproveHRD(Employee employee)
         {
             var SendEmail = myContext.SendEmails.Find(1);
 
@@ -59,7 +59,21 @@ namespace LeaveRequest.Handler
             smtp.Send(SendEmail.Name, employee.Email, "Approval From HRD ", "\n HRD has been approve, Please approve or reject employee request");
         }
 
-        public void SendApproveManager(string url, string token, Employee employee)
+        public void SendRequestManager(Employee employee)
+        {
+            var SendEmail = myContext.SendEmails.Find(1);
+
+
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            smtp.UseDefaultCredentials = false;
+            smtp.EnableSsl = true;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.Credentials = new NetworkCredential(SendEmail.Name, SendEmail.Value);
+
+            smtp.Send(SendEmail.Name, employee.Email, "Approval Leave Request", "\n, New request has been arrived. Please approve or reject employee request ");
+        }
+
+        public void SendApproveManager(Employee employee)
         {
             var SendEmail = myContext.SendEmails.Find(1);
 
@@ -73,7 +87,7 @@ namespace LeaveRequest.Handler
             smtp.Send(SendEmail.Name, employee.Email, "Approval Request ", "\n Your request has been approve");
         }
 
-        public void SendReject(string url, string token, Employee employee)
+        public void SendReject(Employee employee)
         {
             var SendEmail = myContext.SendEmails.Find(1);
 
