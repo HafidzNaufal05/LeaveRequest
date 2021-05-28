@@ -26,7 +26,6 @@ D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcorea
 D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\obj\Debug\netcoreapp3.1\LeaveRequest.csprojAssemblyReference.cache
 D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\obj\Debug\netcoreapp3.1\LeaveRequest.AssemblyInfoInputs.cache
 D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\obj\Debug\netcoreapp3.1\LeaveRequest.AssemblyInfo.cs
 D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\obj\Debug\netcoreapp3.1\LeaveRequest.csproj.CoreCompileInputs.cache
@@ -39,3 +38,16 @@ D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\obj\Debug\netcorea
 D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\obj\Debug\netcoreapp3.1\LeaveRequest.dll
 D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\obj\Debug\netcoreapp3.1\LeaveRequest.pdb
 D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\obj\Debug\netcoreapp3.1\LeaveRequest.genruntimeconfig.cache
+D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\BCrypt.Net-Next.dll
+D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Dapper.dll
+D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+D:\LeaveRequestProject\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll

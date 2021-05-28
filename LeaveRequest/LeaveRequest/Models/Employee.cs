@@ -14,7 +14,6 @@ namespace LeaveRequest.Models
         public string NIK { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Gender { get; set; }
         public DateTime BirthDate { get; set; }
         public string Gender { get; set; }
         public string Address { get; set; }
@@ -25,12 +24,12 @@ namespace LeaveRequest.Models
         public int RemainingQuota { get; set; }
         #nullable enable
         public string? NIK_Manager { get; set; }
-        public Department Department{ get; set; }
-        public Account Account { get; set; }
-        public virtual Employee Manager { get; set; }
+        public Department? Department{ get; set; }
+        public virtual Account? Account { get; set; }
+        public virtual Employee? Manager { get; set; }
 
-        public ICollection<EmployeeRole> EmployeeRoles { get; set; }
-        public ICollection<Request> Requests { get; set; }
+        public ICollection<EmployeeRole>? EmployeeRoles { get; set; }
+        public ICollection<Request>? Requests { get; set; }
 
 
     }

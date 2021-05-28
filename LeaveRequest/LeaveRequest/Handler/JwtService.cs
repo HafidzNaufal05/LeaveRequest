@@ -10,7 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeaveRequest.Services
+namespace LeaveRequest.Handler
 {
     public class JwtService
     {

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeaveRequest.Middleware
+namespace LeaveRequest.Handler
 {
     public static class AuthMiddleware
     {
@@ -29,6 +29,8 @@ namespace LeaveRequest.Middleware
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = true,
                     ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
                     ValidIssuer = "localhost:44338",
                     ValidAudience = "localhost:44338"
                 };
