@@ -11,7 +11,7 @@ namespace LeaveRequest.Models
     public class EmployeeRole
     {
         [Key]
-        public int NIK { get; set; }
+        public int Id { get; set; }
         public Employee Employee { get; set; }
         public Role Role { get; set; }
     }

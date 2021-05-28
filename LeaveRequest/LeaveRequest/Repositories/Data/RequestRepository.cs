@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace LeaveRequest.Repositories.Data
 {
-    public class RequestRepository : GeneralRepository<Request, MyContext, string>
+    public class RequestRepository : GeneralRepository<Request, MyContext, int>
     {
         private MyContext myContext;
         private readonly EmailRequest sendEmail;
