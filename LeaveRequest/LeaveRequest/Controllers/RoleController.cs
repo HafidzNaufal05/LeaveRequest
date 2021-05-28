@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace LeaveRequest.Controllers
 {
-    [Authorize(Roles = "HRD")]
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
-    public class RoleController : BaseController<Role, RoleRepository, string>
+    public class RoleController : BaseController<Role, RoleRepository, int>
     {
         public RoleController(RoleRepository roleRepository) : base(roleRepository)
         {
