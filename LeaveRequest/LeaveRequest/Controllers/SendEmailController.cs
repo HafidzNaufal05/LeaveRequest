@@ -1,7 +1,6 @@
 ﻿using LeaveRequest.Base.Controller;
 using LeaveRequest.Models;
 using LeaveRequest.Repositories.Data;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,14 +10,12 @@ using System.Threading.Tasks;
 
 namespace LeaveRequest.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : BaseController<Employee, EmployeeRepository, int>
+    public class SendEmailController : BaseController<SendEmail, SendEmailRepository, int>
     {
-        public EmployeeController(EmployeeRepository employeeRepository) : base(employeeRepository)
+        public SendEmailController(SendEmailRepository sendEmailRepository) : base(sendEmailRepository)
         {
-
         }
     }
 }
