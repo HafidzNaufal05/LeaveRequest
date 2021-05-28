@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace LeaveRequest.Handler
 {
-    public class SendEmail
+    public class SendingEmail
     {
         private readonly MyContext myContext;
-        public SendEmail(MyContext myContext)
+        public SendingEmail(MyContext myContext)
         {
             this.myContext = myContext;
         }

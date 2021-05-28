@@ -144,7 +144,7 @@ namespace LeaveRequest.Controllers
                 var getEmp = myContext.Employees.Where(e => e.NIK == CheckAccount.NIK).FirstOrDefault();
                 var jwt = new JwtService(configuration);
                 var token = jwt.GenerateSecurityToken(CheckAccount.FirstName, CheckAccount.Email, "Admin");
-                var SendEmail = new Handler.SendEmail(myContext);
+                var SendEmail = new SendingEmail(myContext);
                 SendEmail.SendForgotPassword(token, getEmp);
                 return Ok("Check Your Email");
             }
