@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LeaveRequest.Repositories.Data
 {
-    public class EmployeeRepository : GeneralRepository<Employee, MyContext, string>
+    public class EmployeeRepository : GeneralRepository<Employee, MyContext, int>
     {
         private readonly MyContext myContext;
 

@@ -5,7 +5,6 @@ using LeaveRequest.Handler;
 using LeaveRequest.Models;
 using LeaveRequest.Repositories.Data;
 using LeaveRequest.Repositories.Interfaces;
-using LeaveRequest.Services;
 using LeaveRequest.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -27,7 +26,7 @@ namespace LeaveRequest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseController<Account,AccountRepository, int>
     {
         private AccountRepository accountRepository;
         private ParameterRepository parameterRepository;
@@ -35,7 +34,7 @@ namespace LeaveRequest.Controllers
         private IConfiguration configuration;
         private readonly IGenericDapper dapper;
 
-        public AccountController(IConfiguration configuration, AccountRepository accountRepository, MyContext myContext, IGenericDapper dapper, ParameterRepository parameterRepository)
+        public AccountController(IConfiguration configuration, AccountRepository accountRepository, MyContext myContext, IGenericDapper dapper, ParameterRepository parameterRepository) : base(accountRepository)
         {
             this.configuration = configuration;
             this.accountRepository = accountRepository;
@@ -44,8 +43,8 @@ namespace LeaveRequest.Controllers
             this.parameterRepository = parameterRepository;
         }
 
-        [Route("register")]
-        [HttpPost]
+
+        [HttpPost("Register")]
         public ActionResult Registration(RegisterVM registerVM)
         {
             var HashPassword = Hashing.HashPassword(registerVM.Password);
@@ -80,17 +79,16 @@ namespace LeaveRequest.Controllers
             dbparams.Add("Email", registerVM.Email, DbType.String);
             dbparams.Add("JoinDate", registerVM.JoinDate, DbType.DateTime);
             dbparams.Add("RemainingQuota", parameter.Value, DbType.Int32);
-            dbparams.Add("DepartmentId", registerVM.DepartmentId, DbType.String);
+            dbparams.Add("DepartmentId", registerVM.DepartmentId, DbType.Int32);
             dbparams.Add("NIK_Manager", registerVM.NIK_Manager, DbType.String);
-            dbparams.Add("Role", registerVM.RoleId, DbType.String);
+            dbparams.Add("Role", registerVM.RoleId, DbType.Int32);
             dbparams.Add("Password", HashPassword, DbType.String);
 
             var result = Task.FromResult(dapper.Insert<int>("[dbo].[SP_Register]", dbparams, commandType: CommandType.StoredProcedure));
             return Ok(new { Status = "Success", Message = "User has been registered seccessfully" });
         }
 
-        [Route("login")]
-        [HttpPost]
+        [HttpPost("Login")]
         public ActionResult Login(LoginVM loginVM)
         {
             var dbparams = new DynamicParameters();
@@ -109,8 +107,9 @@ namespace LeaveRequest.Controllers
 
         }
 
-        /*[HttpPost("ChangePassword")]
-        public ActionResult ChangePassword(string email, string oldPassword, string newPassword, string confrimPassword)
+        [Authorize]
+        [HttpPost("ChangePassword")]
+        public ActionResult ChangePassword(string email, string oldPassword, string newPassword)
         {
             var emailCheck = myContext.Accounts.SingleOrDefault(e => e.Employee.Email == email);
             var passwordCheck = Hashing.ValidatePassword(oldPassword, emailCheck.Password);
@@ -122,7 +121,7 @@ namespace LeaveRequest.Controllers
                     var NewPassword = Hashing.HashPassword(newPassword);
                     emailCheck.Password = NewPassword;
                     var Save = myContext.SaveChanges();
-                    if(Save > 0)
+                    if (Save > 0)
                     {
                         return Ok(new { message = "Password Changed", status = "Ok" });
                     }
@@ -133,43 +132,39 @@ namespace LeaveRequest.Controllers
                 }
             }
             return NotFound();
-        }*/
+        }
 
-        //[HttpPost("ForgotPassword")]
-        //public ActionResult ForgotPassword(string email)
-        //{
-        //    string resetCode = Guid.NewGuid().ToString();
-            
-        //    var acc = myContext.Employees.Include(u => u.Account).Where(a => a.Email == email).FirstOrDefault();
-        //    if (acc.Email == email)
-        //    {
-        //        var password = Hashing.HashPassword(resetCode);
-        //        acc.Account.Password = password;
-        //        var result = myContext.SaveChanges();
-        //        sendEmail.
-        //        sendEmail.SendForgotPassword2(resetCode, email);
-        //        return result;
-        //        /*var sendEmail = new SendEmail(myContext);
-        //        sendEmail.SendForgotPassword(email);
-        //        return Ok("Please Check Your Email");*/
-        //    }
-        //    else
-        //    {
-        //        return NotFound("Email Not Found");
-        //    }
-        //}
 
+        [HttpPost("ForgotPassword")]
+        public ActionResult ForgotPassword(string email)
+        {
+            var CheckAccount = myContext.Employees.SingleOrDefault(e => e.Email == email);
+            if (CheckAccount.Email == email)
+            {
+                var getEmp = myContext.Employees.Where(e => e.NIK == CheckAccount.NIK).FirstOrDefault();
+                var jwt = new JwtService(configuration);
+                var token = jwt.GenerateSecurityToken(CheckAccount.FirstName, CheckAccount.Email, "Admin");
+                var SendEmail = new Handler.SendEmail(myContext);
+                SendEmail.SendForgotPassword(token, getEmp);
+                return Ok("Check Your Email");
+            }
+            else
+            {
+                return NotFound("Email Not Found");
+            }
+        }
+
+        [Authorize]
         [HttpPost("ResetPassword")]
-        //[Authorize]
         public ActionResult ResetPassword(string email, string newPassword, string confirmPassword)
         {
-            var acc = myContext.Employees.SingleOrDefault(e => e.Email == email);
-            var password = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == email);
-            if (acc.Email == email)
+            var GetEmp = myContext.Employees.SingleOrDefault(e => e.Email == email);
+            var GetAcc = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == email);
+            if (GetEmp.Email != null)
             {
                 if (newPassword == confirmPassword)
                 {
-                    password.Password = Hashing.HashPassword(newPassword);
+                    GetAcc.Password = Hashing.HashPassword(newPassword);
                     var save = myContext.SaveChanges();
                     if (save > 0)
                     {
