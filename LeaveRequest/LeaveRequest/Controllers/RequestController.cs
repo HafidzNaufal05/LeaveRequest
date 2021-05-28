@@ -27,5 +27,35 @@ namespace LeaveRequest.Controllers
             return Ok(requestRepository.Request(requestVM));
         }
 
+        [HttpPut("SubmitApproved")]
+        public ActionResult SubmitApproved(ApproveVM approveVM)
+        {
+            var data = requestRepository.Approved(approveRequestVM);
+            if (data == 1)
+            {
+                return Ok(new { status = "Approved success" });
+            }
+            else
+            {
+                return StatusCode(500, new { status = "Internal Server Error" });
+            }
+
+        }
+
+        [HttpPut("SubmitReject")]
+        public ActionResult SubmitReject(ApproveRequestVM approveRequestVM)
+        {
+            var data = requestRepository.Reject(approveRequestVM);
+            if (data == 1)
+            {
+                return Ok(new { status = "Reject success" });
+            }
+            else
+            {
+                return StatusCode(500, new { status = "Internal Server Error" });
+            }
+
+        }
+
     }
 }

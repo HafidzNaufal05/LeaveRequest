@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeaveRequest.Middleware
+namespace LeaveRequest.Handler
 {
     public static class AuthMiddleware
     {
