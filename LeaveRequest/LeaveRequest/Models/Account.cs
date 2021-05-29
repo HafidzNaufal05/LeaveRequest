@@ -13,6 +13,6 @@ namespace LeaveRequest.Models
         [Key]
         public string NIK { get; set; }
         public string Password { get; set; }
-        public Employee Employee { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

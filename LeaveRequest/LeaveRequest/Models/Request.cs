@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,9 +23,9 @@ namespace LeaveRequest.Models
     public enum StatusRequest
     {
         Waiting,
-        ApprovedByHRD,
-        RejectByHRD,
         ApprovedByManager,
-        RejectByManager
+        RejectByManager,
+        ApprovedByHRD,
+        RejectByHRD
     }
 }
