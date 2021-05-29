@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace LeaveRequest.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : BaseController<Employee, EmployeeRepository, int>
@@ -23,14 +23,14 @@ namespace LeaveRequest.Controllers
             this.myContext = myContext;
         }
 
-        public int UpdateRemainingLeave(string nik, double leaveRequest)
-        {
-            var data = myContext.Employees.Where(e => e.NIK == nik).FirstOrDefault();
+        //public int UpdateRemainingLeave(string nik, double leaveRequest)
+        //{
+        //    var data = myContext.Employees.Where(e => e.NIK == nik).FirstOrDefault();
 
-            data.RemainingQuota = data.RemainingQuota - Convert.ToInt32(leaveRequest);
-            myContext.Update(data);
-            myContext.SaveChanges();
-            return 1;
-        }
+        //    data.RemainingQuota = data.RemainingQuota - Convert.ToInt32(leaveRequest);
+        //    myContext.Update(data);
+        //    myContext.SaveChanges();
+        //    return 1;
+        //}
     }
 }

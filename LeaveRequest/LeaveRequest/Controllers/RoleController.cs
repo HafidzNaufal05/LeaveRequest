@@ -1,4 +1,4 @@
-﻿using LeaveRequest.Base.Controller;
+using LeaveRequest.Base.Controller;
 using LeaveRequest.Models;
 using LeaveRequest.Repositories.Data;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LeaveRequest.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class RoleController : BaseController<Role, RoleRepository, int>

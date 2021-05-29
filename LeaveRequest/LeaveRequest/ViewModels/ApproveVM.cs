@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +9,7 @@ namespace LeaveRequest.ViewModels
     {
         public int Id { get; set; }
         public string Email { get; set; }
+        public int Role { get; set; }
         public Boolean IsApproved { get; set; }
     }
 }

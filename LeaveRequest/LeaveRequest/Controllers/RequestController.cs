@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace LeaveRequest.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RequestController : BaseController<Request, RequestRepository, int>
@@ -32,32 +32,67 @@ namespace LeaveRequest.Controllers
         [HttpPost("SubmitApproved")]
         public ActionResult SubmitApproved(ApproveVM approveVM)
         {
-            var data = requestRepository.ApprovedHRD(approveVM);
-            if (data == 1)
+            if (approveVM.Role == 3) //manager
             {
-                return Ok(new { status = "Approved success" });
+                var dataManager = requestRepository.ApprovalManager(approveVM);
+                if (dataManager == 1)
+                {
+                    return Ok(new { status = "Approved success" });
+                }
+                else
+                {
+                    return StatusCode(500, new { status = "Internal Server Error" });
+                }
+            }
+            else if(approveVM.Role == 4) //HRD
+            {
+                var dataHRD = requestRepository.ApprovalHRD(approveVM);
+                if (dataHRD == 1)
+                {
+                    return Ok(new { status = "Approved success" });
+                }
+                else
+                {
+                    return StatusCode(500, new { status = "Internal Server Error" });
+                }
             }
             else
             {
-                return StatusCode(500, new { status = "Internal Server Error" });
+                return StatusCode(500, new { status = "Your role not permit to do this action" });
             }
-
         }
 
-        //[HttpPut("SubmitReject")]
-        //public ActionResult SubmitReject(ApproveVM approveRequestVM)
-        //{
-        //    var data = requestRepository.Reject(approveRequestVM);
-        //    if (data == 1)
-        //    {
-        //        return Ok(new { status = "Reject success" });
-        //    }
-        //    else
-        //    {
-        //        return StatusCode(500, new { status = "Internal Server Error" });
-        //    }
-
-        //}
-
+        [HttpPost("RejectApproved")]
+        public ActionResult RejectApproved(ApproveVM approveVM)
+        {
+            if (approveVM.Role == 3) //manager
+            {
+                var dataManager = requestRepository.RejectManager(approveVM);
+                if (dataManager == 1)
+                {
+                    return Ok(new { status = "Rejected success" });
+                }
+                else
+                {
+                    return StatusCode(500, new { status = "Internal Server Error" });
+                }
+            }
+            else if (approveVM.Role == 4) //HRD
+            {
+                var dataHRD = requestRepository.RejectHRD(approveVM);
+                if (dataHRD == 1)
+                {
+                    return Ok(new { status = "Rejected success" });
+                }
+                else
+                {
+                    return StatusCode(500, new { status = "Internal Server Error" });
+                }
+            }
+            else
+            {
+                return StatusCode(500, new { status = "Your role not permit to do this action" });
+            }
+        }
     }
 }
