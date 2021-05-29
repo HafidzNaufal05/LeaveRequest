@@ -19,13 +19,24 @@ namespace LeaveRequest.Handler
 
         public void SendForgotPassword(string token, Employee employee)
         {
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
-            
-            smtp.UseDefaultCredentials = false;
-            smtp.EnableSsl = true;
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtp.Credentials = new NetworkCredential("aninsabrina17@gmail.com", "yulisulasta");
-            smtp.Send("aninsabrina17@gmail.com", employee.Email, "Reset Password", "https://localhost:44338/api/Account/ResetPassword \n token : " + token);
+            var SendEmail = myContext.SendEmails.Find(1);
+
+            MailAddress from = new MailAddress(SendEmail.Name, "Leave Request");
+            MailAddress to = new MailAddress(employee.Email, employee.FirstName + " " + employee.LastName);
+            MailMessage message = new MailMessage(from, to);
+
+            message.Subject = "Reset Password";
+            message.Body = @"https://localhost:44338/api/Account/ResetPassword \n token : " + token;
+            SmtpClient smtpmail = new SmtpClient();
+
+            System.Net.NetworkCredential smtpusercredential = new System.Net.NetworkCredential(SendEmail.Name, SendEmail.Value);
+            smtpmail.UseDefaultCredentials = false;
+            smtpmail.EnableSsl = true;
+            smtpmail.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtpmail.Credentials = smtpusercredential;
+            smtpmail.Host = "smtp.gmail.com";
+            smtpmail.Port = 587;
+            smtpmail.Send(message);
         }
 
         public void SendRequestEmployee(Employee employee)
