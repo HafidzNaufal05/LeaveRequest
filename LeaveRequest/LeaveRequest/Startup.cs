@@ -70,6 +70,7 @@ namespace LeaveRequest
             services.AddScoped<ParameterRepository>();
             services.AddScoped<RequestRepository>();
             services.AddScoped<RoleRepository>();
+            services.AddScoped<SendEmailRepository>();
 
             services.AddScoped<IGenericDapper, GeneralDapper>();
 
