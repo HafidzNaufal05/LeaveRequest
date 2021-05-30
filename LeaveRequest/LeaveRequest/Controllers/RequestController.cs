@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace LeaveRequest.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RequestController : BaseController<Request, RequestRepository, int>
@@ -23,41 +23,62 @@ namespace LeaveRequest.Controllers
             this.requestRepository = requestRepository;
         }
 
-        [HttpPost("requestCuti")]
+        [HttpPost("RequestCuti")]
         public ActionResult RequestCuti(RequestVM requestVM)
         {
-            return Ok(requestRepository.Request(requestVM));
+            var data = requestRepository.Request(requestVM);
+            if (data >= 1)
+            {
+                return Ok("Request Has Been Add");
+            }
+            return NotFound("Request Not Add");
+
         }
 
-        [HttpPost("SubmitApproved")]
-        public ActionResult SubmitApproved(ApproveVM approveVM)
+        [HttpPost("SubmitApprovedManager")]
+        public ActionResult SubmitApprovedManager(ApproveVM approveVM)
         {
-            var data = requestRepository.ApprovedHRD(approveVM);
-            if (data == 1)
+            var data = requestRepository.ApprovedManager(approveVM);
+            if (data >= 1)
             {
                 return Ok(new { status = "Approved success" });
             }
             else
             {
-                return StatusCode(500, new { status = "Internal Server Error" });
+                return StatusCode(404, new { status = "Data Not Found" });
             }
 
         }
 
-        //[HttpPut("SubmitReject")]
-        //public ActionResult SubmitReject(ApproveVM approveRequestVM)
-        //{
-        //    var data = requestRepository.Reject(approveRequestVM);
-        //    if (data == 1)
-        //    {
-        //        return Ok(new { status = "Reject success" });
-        //    }
-        //    else
-        //    {
-        //        return StatusCode(500, new { status = "Internal Server Error" });
-        //    }
+        [HttpPost("SubmitApprovedHRD")]
+        public ActionResult SubmitApprovedHRD(ApproveVM approveVM)
+        {
+            var data = requestRepository.ApprovedHRD(approveVM);
+            if (data >= 1)
+            {
+                return Ok(new { status = "Approved success" });
+            }
+            else
+            {
+                return StatusCode(404, new { status = "Data Not Found" });
+                }
 
-        //}
+        }
+
+        [HttpPut("SubmitReject")]
+        public ActionResult SubmitRejectManager(ApproveVM approveRequestVM)
+        {
+            var data = requestRepository.Reject(approveRequestVM);
+            if (data >= 1)
+            {
+                return Ok(new { status = "Reject success" });
+            }
+            else
+            {
+                return StatusCode(404, new { status = "Data Not Found" });
+            }
+
+        }
 
     }
 }

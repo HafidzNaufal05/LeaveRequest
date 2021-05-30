@@ -9,6 +9,7 @@ namespace LeaveRequest.ViewModels
     {
         public int Id { get; set; }
         public string Email { get; set; }
-        public Boolean IsApproved { get; set; }
+        public string Notes { get; set; }
+        //public Boolean IsApproved { get; set; }
     }
 }

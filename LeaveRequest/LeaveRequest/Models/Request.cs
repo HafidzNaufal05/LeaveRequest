@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LeaveRequest.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,10 +13,22 @@ namespace LeaveRequest.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Tidak boleh kosong")]
+        public LeaveCategory LeaveCategory { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime StartDate { get; set; }
+
+        [Required(ErrorMessage = "Tidak boleh kosong"), DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime EndDate { get; set; }
+
+        [Required(ErrorMessage = "Tidak boleh kosong")]
         public string ReasonRequest { get; set; }
         public Employee Employee { get; set; }
+
+        [Required(ErrorMessage = "Tidak boleh kosong")]
         public string Notes { get; set; }
         public StatusRequest StatusRequest { get; set; }
     }
@@ -23,9 +36,10 @@ namespace LeaveRequest.Models
     public enum StatusRequest
     {
         Waiting,
-        ApprovedByHRD,
-        RejectByHRD,
         ApprovedByManager,
-        RejectByManager
+        RejectByManager,
+        ApprovedByHRD,
+        RejectByHRD
     }
+
 }
