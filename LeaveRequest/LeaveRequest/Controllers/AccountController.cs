@@ -67,6 +67,7 @@ namespace LeaveRequest.Controllers
                 parameter = parameterRepository.getByName("Diatas lima tahun");
             }
 
+            //EmployeeRole employeeRole = new EmployeeRole();
             var dbparams = new DynamicParameters();
             dbparams.Add("NIK", registerVM.NIK, DbType.String);
             dbparams.Add("FirstName", registerVM.FirstName, DbType.String);
@@ -81,7 +82,7 @@ namespace LeaveRequest.Controllers
             dbparams.Add("RemainingQuota", parameter.Value, DbType.Int32);
             dbparams.Add("DepartmentId", registerVM.DepartmentId, DbType.Int32);
             dbparams.Add("NIK_Manager", registerVM.NIK_Manager, DbType.String);
-            dbparams.Add("Role", registerVM.RoleId, DbType.Int32);
+            dbparams.Add("Role", 1, DbType.Int32);
             dbparams.Add("Password", HashPassword, DbType.String);
 
             var result = Task.FromResult(dapper.Insert<int>("[dbo].[SP_Register]", dbparams, commandType: CommandType.StoredProcedure));
