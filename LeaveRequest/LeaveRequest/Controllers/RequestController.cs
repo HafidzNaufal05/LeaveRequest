@@ -77,7 +77,34 @@ namespace LeaveRequest.Controllers
             {
                 return StatusCode(404, new { status = "Data Not Found" });
             }
+        }
 
+        [HttpGet("RequestHistory")]
+        public ActionResult GetRequestHistory()
+        {
+            var data = requestRepository.RequestHistory();
+            if (data.Count() >= 1)
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return StatusCode(404, new { status = "Data Not Found" });
+            }
+        }
+        
+        [HttpGet("RequestActual")]
+        public ActionResult GetRequestActual()
+        {
+            var data = requestRepository.RequestActual();
+            if (data.Count() >= 1)
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return StatusCode(404, new { status = "Data Not Found" });
+            }
         }
 
     }

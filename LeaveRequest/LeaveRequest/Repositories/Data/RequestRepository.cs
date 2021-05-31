@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 using LeaveRequest.Context;
 using LeaveRequest.Handler;
 using LeaveRequest.Models;
+using LeaveRequest.Repositories.Interfaces;
 using LeaveRequest.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,15 +20,16 @@ namespace LeaveRequest.Repositories.Data
         private MyContext myContext;
         private readonly EmailRequest sendEmail;
         private readonly EmployeeRepository employeeRepository;
-
+        private readonly IGenericDapper dapper;
         public IConfiguration Configuration { get; }
 
-        public RequestRepository(MyContext myContext, EmployeeRepository employeeRepository, IConfiguration Configuration) : base(myContext)
+        public RequestRepository(MyContext myContext, EmployeeRepository employeeRepository, IConfiguration Configuration, IGenericDapper dapper) : base(myContext)
         {
             this.myContext = myContext;
             this.sendEmail = new EmailRequest(myContext);
             this.employeeRepository = employeeRepository;
             this.Configuration = Configuration;
+            this.dapper = dapper;
         }
 
         class Global
@@ -39,7 +43,7 @@ namespace LeaveRequest.Repositories.Data
             var manager = myContext.Employees.Where(e => e.NIK == employee.NIK_Manager).FirstOrDefault();
             //var hrd = myContext.Employees.Where(e => e.NIK.Contains("HRD")).FirstOrDefault();
             var TotalDay = (requestVM.EndDate - requestVM.StartDate).TotalDays + 1;
-/*            var sumMonth = (requestVM.EndDate - requestVM.StartDate).TotalDays;
+            /*var sumMonth = (requestVM.EndDate - requestVM.StartDate).TotalDays;
             var TotalDaycek = requestVM.StartDate.AddMonths(0).AddDays(sumMonth);*/
 
             if (requestVM.LeaveCategory == 0) //SpecialRequest
@@ -93,10 +97,8 @@ namespace LeaveRequest.Repositories.Data
                     sendEmail.SendRequestManager(manager, employee, request.Id);
                     return 1;
                 }
-                
                 else
                 {
-
                     return 0;
                 }
             }
@@ -173,7 +175,6 @@ namespace LeaveRequest.Repositories.Data
                 myContext.Update(data);
 
                 sendEmail.SendRequestHRD(hrd,employee , data.Id, approveVM.Notes);
-
             }
 
             else if (data.StatusRequest == StatusRequest.ApprovedByManager || data.StatusRequest == StatusRequest.ApprovedByHRD || data.StatusRequest == StatusRequest.RejectByHRD || data.StatusRequest == StatusRequest.RejectByManager)
@@ -189,7 +190,7 @@ namespace LeaveRequest.Repositories.Data
             return 1;
         }
 
-        public int ApprovedHRD(ApproveVM approveVM)
+        public int ApprovedHRD(ApproveVM approveVM /*, RequestVM requestVM*/)
         {
             var employee = myContext.Employees.Where(e => e.Email == approveVM.Email).FirstOrDefault();
             var hrd = myContext.Employees.Where(e => e.NIK.Contains("4401HRD")).FirstOrDefault();
@@ -208,15 +209,19 @@ namespace LeaveRequest.Repositories.Data
             {
 
                 data.StatusRequest = StatusRequest.ApprovedByHRD;
-                var TotalDay = (data.EndDate - data.StartDate).TotalDays;
+                if (data.ReasonRequest == "Married")
+                {
+                    employee.MaritialStatus = "Married";
+                }
+                var TotalDay = (data.EndDate - data.StartDate).TotalDays + 1;
                 if (data.LeaveCategory != 0)
                 {
                     employee.RemainingQuota = (int)(employee.RemainingQuota - TotalDay);
                 }
                 myContext.Update(data);
+                myContext.Update(employee);
 
                 sendEmail.SendApproveHRD(manager, employee, data.Id, approveVM.Notes);
-
             }
             else
             {
@@ -238,12 +243,12 @@ namespace LeaveRequest.Repositories.Data
             {
                 return 0;
             }
-            if (data.StatusRequest == StatusRequest.RejectByHRD || data.StatusRequest == StatusRequest.RejectByManager)
+            else if (data.StatusRequest == StatusRequest.RejectByHRD || data.StatusRequest == StatusRequest.RejectByManager)
             {
                 return 0;
             }
 
-            if (data.StatusRequest == StatusRequest.Waiting)
+            else if (data.StatusRequest == StatusRequest.Waiting)
             {
                 data.StatusRequest = StatusRequest.RejectByManager;
                 myContext.Update(data);
@@ -263,6 +268,28 @@ namespace LeaveRequest.Repositories.Data
             }
             myContext.SaveChanges();
             return 1;
+        }
+
+        public List<GetDataHistory> RequestHistory()
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("RejectManager", 2);
+            dbparams.Add("ApproveHRD", 3);
+            dbparams.Add("RejectHRD", 4);
+
+            var result = Task.FromResult(dapper.GetAll<GetDataHistory>("[dbo].[SP_GetHistoryRequest]", dbparams,
+                commandType: CommandType.StoredProcedure)).Result;
+            return result.ToList();
+        }
+        
+        public List<GetDataHistory> RequestActual()
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("Waiting", 0);
+            dbparams.Add("ApproveManager", 1);
+            var result = Task.FromResult(dapper.GetAll<GetDataHistory>("[dbo].[SP_GetHistoryactual]", dbparams,
+                commandType: CommandType.StoredProcedure)).Result;
+            return result.ToList();
         }
 
     }
