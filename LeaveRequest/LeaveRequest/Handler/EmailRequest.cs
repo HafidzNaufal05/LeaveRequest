@@ -127,7 +127,7 @@ namespace LeaveRequest.Handler
             MailMessage message = new MailMessage(from, to);
 
             message.Subject = "Reset Password";
-            message.Body = @"https://localhost:44338/api/Account/ResetPassword \n token : " + token;
+            message.Body = @"https://localhost:44306/Auth/Index \n token : " + token;
             SmtpClient smtpmail = new SmtpClient();
 
             NetworkCredential smtpusercredential = new NetworkCredential(SendEmail.Name, SendEmail.Value);

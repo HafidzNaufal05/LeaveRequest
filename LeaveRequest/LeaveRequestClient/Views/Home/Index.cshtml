@@ -17,30 +17,27 @@
             <input class="un " type="text" align="center" placeholder="Email">
             <input class="pass" type="password" align="center" placeholder="Password">
             <a class="submit" align="center">Sign in</a>
-            <div class="forgot" align="center">
-                <p align="center"><a data-target="#regisModal" data-toggle="modal" href="#">Register Account</p>
-                <p align="center"><a href="#">Forgot Password?</p>
+            <div class="menuAccount" align="center">
+                <a style="color: purple !important" href="javascript:void(0)" class="btn bg-transparent" data-toggle="modal" data-target="#regisModal">Register</a>
+                <a style="color: purple !important" href="javascript:void(0)" class="btn bg-transparent" data-toggle="modal" data-target="#forgotpassword">Forgot Password?</a>
             </div>
-            @*<div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="ForgotPassword()">Submit</button>
-            </div>*@
         </form>
     </div>
 </body>
 
 <!--MODAL REGISTER-->
-<div class="modal fade" id="regisModal" role="dialog">
+<div class="modal fade" id="regisModal" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLiveLabel">Register Employee</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button id="buttonClose" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form name="formValidate" onsubmit="return Submit()">
+                    <form id="registerform" action="Account/Register">
 
                         <div class="mb-3">
                             <label for="formGroupExampleInput" class="form-label">First Name</label>
@@ -117,12 +114,37 @@
                         </div>
 
                         <div class="modal-footer">
-                            <input type="submit" class="btn btn-success" value="Submit" id="btnSubmit">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button id="submit" class="btn btn-primary" onclick="Submit()">Submit</button>
+                            <button id="close" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </form>
                 </div>
 
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL FORGOT-->
+<div class="modal fade" id="forgotpassword" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Forgot Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="forgotform" action="Account/ForgotPassword">
+                    <div class="form-group">
+                        <label for="email" class="col-form-label">Email</label>
+                        <input type="text" class="form-control" id="emailforgot" name="emailforgot">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="ForgotPassword()">Submit</button>
             </div>
         </div>
     </div>
@@ -216,7 +238,7 @@
         box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
     }
 
-    .forgot {
+    .menuAccount {
         text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
         color: #E1BEE7;
         padding-top: 15px;
@@ -238,61 +260,61 @@
 
     <script>
         function Submit() {
-            //let checkFirstName = document.forms["formValidate"]["firstName"].value;
-            //let checkLastName = document.forms["formValidate"]["LastName"].value;
-            //let checkEmail = document.forms["formValidate"]["email"].value;
-            //let checkPass = document.forms["formValidate"]["password"].value;
-            //if (checkFirstName == "") {
-            //    alert("Name must be filled out");
-            //    return false;
-            //}
-            //else if (checkLastName == "") {
-            //    alert("Email must be filled out");
-            //    return false;
-            //}
-            //else if (checkEmail == "") {
-            //    alert("Email must be filled out");
-            //    return false;
-            //}
-            //else if (checkPass == "") {
-            //    alert("Password must be filled out");
-            //    return false;
-            //}
-            var Employee = new Object()
-                Employee.firstName = $('#fisrtName').val()
-                Employee.lastName = $('#lastName').val()
-                Employee.birthDate = $('#birthDate').val()
-                Employee.gender = $('input[name=gender]:checked').val()
-                Employee.address = $('#address').val()
-                Employee.materialStatus = $('input[name=materialStatus]:checked').val()
-                Employee.phoneNumber = $('#phoneNumber').val()
-                Employee.email = $('#email').val()
-                Employee.joinDate = $('#joinDate').val()
-                Employee.ManagerNIK = $('#ManagerNIK').val()
-                Employee.password = $('#password').val()
-                    console.log(Employee)
-                    AddData(Employee)
-        }
-
-        let AddData = (Employee) => {
+            var User = new Object();
+            User.FirstName = $("#fisrtName").val();
+            User.LastName = $("#lastName").val();
+            User.BirthDate = $("#birthDate").val();
+            User.Gender = $('input[name=gender]:checked').val()
+            User.Address = $("#address").val();
+            User.MaritialStatus = $('input[name=materialStatus]:checked').val()
+            User.PhoneNumber = $("#phoneNumber").val();
+            User.Email = $("#email").val();
+            User.JoinDate = $("#joinDate").val();
+            User.DepartmentId = $("#departmentId").val();
+            User.NIK_Manager = $("#ManagerNIK").val();
+            User.Password = $("#password").val();
             $.ajax({
-                url: '/Register/Register',
-                type: 'POST',
-                data: Employee,
-
+                type: 'post',
+                url: '/Account/Register',
+                data: User
             }).done((result) => {
+                console.log(result);
                 if (result == 200) {
-                    $("#regisModal").modal('hide');
-                    swal({
-                        title: "Success!",
-                        text: "Data added to database!",
-                        icon: "success",
-                    }
-                    )/*.then(() => { location.reload() })*/
+                    alert("Successed to Add Data!");
+                    $('#regisModal').modal('hide');
+                    $("#fisrtName").val(null);
+                    $("#lastname").val(null);
+                    $("#birthdate").val(null);
+                    $('input[name=gender]:checked').val(null);
+                    $("#address").val(null);
+                    $('input[name=materialStatus]:checked').val(null);
+                    $("#phoneNumber").val(null);
+                    $("#email").val(null);
+                    $("#joinDate").val(null);
+                    $("#departmentId").val(null);
+                    $("#ManagerNIK").val(null);
+                    $("#password").val(null);
                 }
             }).fail((result) => {
                 console.log(result);
                 alert("Failed to Add Data!");
+            })
+        }
+
+        function ForgotPassword() {
+            var User = new Object();
+            User.Email = $("#emailforgot").val();
+            $.ajax({
+                type: 'post',
+                url: '/Account/ForgotPassword',
+                data: User
+            }).done((result) => {
+                if (result == 200) {
+                    alert("Check Your Email for New Password!");
+                }
+            }).fail((result) => {
+                console.log(result);
+                alert("Failed to Send Email!");
             })
         }
     </script>
