@@ -1,0 +1,300 @@
+﻿@{
+    ViewData["Title"] = "Welcome!";
+}
+
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <title>Sign in</title>
+</head>
+
+<body>
+    <div class="main">
+        <p class="sign" align="center">Sign in</p>
+        <form class="form1">
+            <input class="un " type="text" align="center" placeholder="Email">
+            <input class="pass" type="password" align="center" placeholder="Password">
+            <a class="submit" align="center">Sign in</a>
+            <div class="forgot" align="center">
+                <p align="center"><a data-target="#regisModal" data-toggle="modal" href="#">Register Account</p>
+                <p align="center"><a href="#">Forgot Password?</p>
+            </div>
+            @*<div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="ForgotPassword()">Submit</button>
+            </div>*@
+        </form>
+    </div>
+</body>
+
+<!--MODAL REGISTER-->
+<div class="modal fade" id="regisModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLiveLabel">Register Employee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form name="formValidate" onsubmit="return Submit()">
+
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="fisrtName" name="fisrtName" placeholder="First Name">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">Birth Date</label>
+                            <input type="date" class="form-control" id="birthDate" name="birthDate" placeholder="Birth Date">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">Gender</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
+                                <label class="form-check-label" for="male">Male</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
+                                <label class="form-check-label" for="female">Female</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address" placeholder="Address">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">Matirial Status</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="materialStatus" id="single" value="Single">
+                                <label class="form-check-label" for="single">Single</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="materialStatus" id="married" value="Married">
+                                <label class="form-check-label" for="married">Married</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone Numbe">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">Join Date</label>
+                            <input type="date" class="form-control" id="joinDate" name="joinDate" placeholder="Join Datee">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">Department ID</label>
+                            <input type="text" class="form-control" id="departmentId" name="departmentId" placeholder="Department ID">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">Manager NIK</label>
+                            <input type="text" class="form-control" id="ManagerNIK" name="ManagerNIK" placeholder="Manager NIK">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">Password</label>
+                            <input type="text" class="form-control" id="password" name="password" placeholder="Password">
+                        </div>
+
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-success" value="Submit" id="btnSubmit">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #F3EBF6;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    .main {
+        background-color: #FFFFFF;
+        width: 400px;
+        height: 400px;
+        margin: 7em auto;
+        border-radius: 1.5em;
+        box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+    }
+
+    .sign {
+        padding-top: 40px;
+        color: #8C55AA;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        font-size: 23px;
+    }
+
+    .un {
+        width: 76%;
+        color: rgb(38, 50, 56);
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 1px;
+        background: rgba(136, 126, 126, 0.04);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        outline: none;
+        box-sizing: border-box;
+        border: 2px solid rgba(0, 0, 0, 0.02);
+        margin-bottom: 50px;
+        margin-left: 46px;
+        text-align: center;
+        margin-bottom: 27px;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    form.form1 {
+        padding-top: 40px;
+    }
+
+    .pass {
+        width: 76%;
+        color: rgb(38, 50, 56);
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 1px;
+        background: rgba(136, 126, 126, 0.04);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        outline: none;
+        box-sizing: border-box;
+        border: 2px solid rgba(0, 0, 0, 0.02);
+        margin-bottom: 50px;
+        margin-left: 46px;
+        text-align: center;
+        margin-bottom: 27px;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+
+        .un:focus, .pass:focus {
+            border: 2px solid rgba(0, 0, 0, 0.18) !important;
+        }
+
+    .submit {
+        cursor: pointer;
+        border-radius: 5em;
+        color: #fff;
+        background: linear-gradient(to right, #9C27B0, #E040FB);
+        border: 0;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-family: 'Ubuntu', sans-serif;
+        margin-left: 35%;
+        font-size: 13px;
+        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+    }
+
+    .forgot {
+        text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+        color: #E1BEE7;
+        padding-top: 15px;
+    }
+
+    a {
+        text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+        color: #E1BEE7;
+        text-decoration: none
+    }
+
+    @@media (max-width: 600px) {
+        .main {
+            border-radius: 0px;
+        }
+</style>
+
+@section scripts{
+
+    <script>
+        function Submit() {
+            //let checkFirstName = document.forms["formValidate"]["firstName"].value;
+            //let checkLastName = document.forms["formValidate"]["LastName"].value;
+            //let checkEmail = document.forms["formValidate"]["email"].value;
+            //let checkPass = document.forms["formValidate"]["password"].value;
+            //if (checkFirstName == "") {
+            //    alert("Name must be filled out");
+            //    return false;
+            //}
+            //else if (checkLastName == "") {
+            //    alert("Email must be filled out");
+            //    return false;
+            //}
+            //else if (checkEmail == "") {
+            //    alert("Email must be filled out");
+            //    return false;
+            //}
+            //else if (checkPass == "") {
+            //    alert("Password must be filled out");
+            //    return false;
+            //}
+            var Employee = new Object()
+                Employee.firstName = $('#fisrtName').val()
+                Employee.lastName = $('#lastName').val()
+                Employee.birthDate = $('#birthDate').val()
+                Employee.gender = $('input[name=gender]:checked').val()
+                Employee.address = $('#address').val()
+                Employee.materialStatus = $('input[name=materialStatus]:checked').val()
+                Employee.phoneNumber = $('#phoneNumber').val()
+                Employee.email = $('#email').val()
+                Employee.joinDate = $('#joinDate').val()
+                Employee.ManagerNIK = $('#ManagerNIK').val()
+                Employee.password = $('#password').val()
+                    console.log(Employee)
+                    AddData(Employee)
+        }
+
+        let AddData = (Employee) => {
+            $.ajax({
+                url: '/Register/Register',
+                type: 'POST',
+                data: Employee,
+
+            }).done((result) => {
+                if (result == 200) {
+                    $("#regisModal").modal('hide');
+                    swal({
+                        title: "Success!",
+                        text: "Data added to database!",
+                        icon: "success",
+                    }
+                    )/*.then(() => { location.reload() })*/
+                }
+            }).fail((result) => {
+                console.log(result);
+                alert("Failed to Add Data!");
+            })
+        }
+    </script>
+
+}

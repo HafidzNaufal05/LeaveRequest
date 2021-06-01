@@ -69,7 +69,7 @@ namespace LeaveRequest.Controllers
 
             //EmployeeRole employeeRole = new EmployeeRole();
             var dbparams = new DynamicParameters();
-            dbparams.Add("NIK", registerVM.NIK, DbType.String);
+            //dbparams.Add("NIK", registerVM.NIK, DbType.String);
             dbparams.Add("FirstName", registerVM.FirstName, DbType.String);
             dbparams.Add("LastName", registerVM.LastName, DbType.String);
             dbparams.Add("BirthDate", registerVM.BirthDate, DbType.DateTime);
@@ -145,7 +145,7 @@ namespace LeaveRequest.Controllers
                 var getEmp = myContext.Employees.Where(e => e.NIK == CheckAccount.NIK).FirstOrDefault();
                 var jwt = new JwtService(configuration);
                 var token = jwt.GenerateSecurityToken(CheckAccount.FirstName, CheckAccount.Email, "Admin");
-                var SendEmail = new SendingEmail(myContext);
+                var SendEmail = new EmailRequest(myContext);
                 SendEmail.SendForgotPassword(token, getEmp);
                 return Ok("Check Your Email");
             }
