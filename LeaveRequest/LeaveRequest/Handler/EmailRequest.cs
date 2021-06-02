@@ -98,7 +98,7 @@ namespace LeaveRequest.Handler
             smtp.Credentials = new NetworkCredential(SendEmail.Name, SendEmail.Value);
 
             smtp.Send(SendEmail.Name, employee.Email, "Approval Request ", "\nHello " + employee.FirstName + "  Your request with Id " + id + " has been approve" + "\nNotes : " + notes);
-            smtp.Send(SendEmail.Name, manager.Email, "Approval Request ", "\nLeave Request \n\nId : " + id + "\nName : " + employee.FirstName + " " + employee.LastName + "\nStatus : Has Been Approved \nNotes : " + notes);
+            smtp.Send(SendEmail.Name, manager.Email, "Approval Request ", "\nLeave Request \n\nId : "+ id +"\nName : "+ employee.FirstName + " " +employee.LastName+"\nStatus : Has Been Approved \nNotes : "+ notes);
         }
 
 
@@ -127,7 +127,7 @@ namespace LeaveRequest.Handler
             MailMessage message = new MailMessage(from, to);
 
             message.Subject = "Reset Password";
-            message.Body = @"https://localhost:44306/Auth/Index \n token : " + token;
+            message.Body = @"https://localhost:44338/api/Account/ResetPassword \n token : " + token;
             SmtpClient smtpmail = new SmtpClient();
 
             NetworkCredential smtpusercredential = new NetworkCredential(SendEmail.Name, SendEmail.Value);

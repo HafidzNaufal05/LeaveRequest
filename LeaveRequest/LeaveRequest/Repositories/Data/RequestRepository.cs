@@ -216,6 +216,7 @@ namespace LeaveRequest.Repositories.Data
                 myContext.Update(data);
 
                 sendEmail.SendApproveHRD(manager, employee, data.Id, approveVM.Notes);
+
             }
             else
             {
