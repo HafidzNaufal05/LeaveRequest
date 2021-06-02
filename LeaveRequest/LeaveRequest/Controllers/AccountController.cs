@@ -137,10 +137,10 @@ namespace LeaveRequest.Controllers
 
 
         [HttpPost("ForgotPassword")]
-        public ActionResult ForgotPassword(string email)
+        public ActionResult ForgotPassword(ForgotPasswordVM forgotPasswordVM)
         {
-            var CheckAccount = myContext.Employees.SingleOrDefault(e => e.Email == email);
-            if (CheckAccount.Email == email)
+            var CheckAccount = myContext.Employees.SingleOrDefault(e => e.Email == forgotPasswordVM.Email);
+            if (CheckAccount.Email == forgotPasswordVM.Email)
             {
                 var getEmp = myContext.Employees.Where(e => e.NIK == CheckAccount.NIK).FirstOrDefault();
                 var jwt = new JwtService(configuration);
@@ -157,15 +157,15 @@ namespace LeaveRequest.Controllers
 
         //[Authorize]
         [HttpPost("ResetPassword")]
-        public ActionResult ResetPassword(string email, string newPassword, string confirmPassword)
+        public ActionResult ResetPassword(ResetPasswordVM resetPasswordVM)
         {
-            var GetEmp = myContext.Employees.SingleOrDefault(e => e.Email == email);
-            var GetAcc = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == email);
+            var GetEmp = myContext.Employees.SingleOrDefault(e => e.Email == resetPasswordVM.Email);
+            var GetAcc = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == resetPasswordVM.Email);
             if (GetEmp.Email != null)
             {
-                if (newPassword == confirmPassword)
+                if (resetPasswordVM.newPassword == resetPasswordVM.confirmPassword)
                 {
-                    GetAcc.Password = Hashing.HashPassword(newPassword);
+                    GetAcc.Password = Hashing.HashPassword(resetPasswordVM.newPassword);
                     var save = myContext.SaveChanges();
                     if (save > 0)
                     {
