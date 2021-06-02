@@ -129,32 +129,34 @@
         }
 </style>
 
-<script>
-    function ResetPassword() {
-        debugger
-        var ResetPassword = new Object();
-        ResetPassword.Email = $("#email").val();
-        ResetPassword.newPassword = $("#password").val();
-        ResetPassword.confirmPassword = $("#newPassword").val();
-        console.log(ResetPassword);
-        $.ajax({
-            type: 'post',
-            url: '/Account/ResetPassword',
-            data: ResetPassword
-        }).done((result) => {
-            console.log("ok");
-            if (result == 200) {
-                alert("Password has been change!");
-                window.location.href = "https://localhost:44306/Home/Index";
-            }
-            else {
-                alert("Failed to Login");
-            }
-        }).fail((result) => {
-            console.log(result);
-            if (result != 200) {
-                alert("Failed to reset password");
-            }
-        })
-    }
-</script>
+@section scripts{
+    <script>
+        function ResetPassword() {
+            debugger
+            var ResetPassword = new Object();
+            ResetPassword.Email = $("#email").val();
+            ResetPassword.newPassword = $("#password").val();
+            ResetPassword.confirmPassword = $("#newPassword").val();
+            console.log(ResetPassword);
+            $.ajax({
+                type: 'post',
+                url: '/Account/ResetPassword',
+                data: ResetPassword
+            }).done((result) => {
+                console.log("ok");
+                if (result == 200) {
+                    alert("Password has been change!");
+                    window.location.href = "https://localhost:44306/Home/Index";
+                }
+                else {
+                    alert("Failed to Login");
+                }
+            }).fail((result) => {
+                console.log(result);
+                if (result != 200) {
+                    alert("Failed to reset password");
+                }
+            })
+        }
+    </script>
+}

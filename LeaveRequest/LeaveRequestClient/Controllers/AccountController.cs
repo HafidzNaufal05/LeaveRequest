@@ -1,4 +1,4 @@
-﻿using LeaveRequest.ViewModels;
+using LeaveRequest.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -46,6 +46,15 @@ namespace LeaveRequestClient.Controllers
             var httpClient = new HttpClient();
             StringContent content = new StringContent(JsonConvert.SerializeObject(email), Encoding.UTF8, "application/json");
             var result = httpClient.PostAsync(url, content).Result;
+            return result.StatusCode;
+        }
+
+        [HttpPost]
+        public HttpStatusCode Login(LoginVM loginVM)
+        {
+            var httpClient = new HttpClient();
+            StringContent content = new StringContent(JsonConvert.SerializeObject(loginVM), Encoding.UTF8, "application/json");
+            var result = httpClient.PostAsync("https://localhost:44338/api/Account/Login", content).Result;
             return result.StatusCode;
         }
     }

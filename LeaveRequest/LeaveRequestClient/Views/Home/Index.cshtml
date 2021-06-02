@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "Welcome!";
 }
 
@@ -14,9 +14,10 @@
     <div class="main">
         <p class="sign" align="center">Sign in</p>
         <form class="form1">
-            <input class="un " type="text" align="center" placeholder="Email">
-            <input class="pass" type="password" align="center" placeholder="Password">
-            <a class="submit" align="center">Sign in</a>
+            <input class="un " type="text" align="center" id="emailLogin" name="emailLogin" placeholder="Email">
+            <input class="pass" type="password" align="center" id="passwordLogin" name="passwordLogin" placeholder="Password">
+            <button class="submit btn btn-primary" onclick="Login()">Sign in</button>
+            @*<a class="submit" align="center">Sign in</a>*@
             <div class="menuAccount" align="center">
                 <a style="color: purple !important" href="javascript:void(0)" class="btn bg-transparent" data-toggle="modal" data-target="#regisModal">Register</a>
                 <a style="color: purple !important" href="javascript:void(0)" class="btn bg-transparent" data-toggle="modal" data-target="#forgotpassword">Forgot Password?</a>
@@ -259,6 +260,32 @@
 @section scripts{
 
     <script>
+        function Login() {
+            var Login = new Object();
+            Login.Email = $("#emailLogin").val();
+            Login.Password = $("#passwordLogin").val();
+            console.log(Login);
+            $.ajax({
+                type: 'post',
+                url: '/Account/Login',
+                data: Login
+            }).done((result) => {
+                console.log("ok");
+                if (result == 200) {
+                    alert("Successed to Login");
+                    /*window.location.href = "https://localhost:44306/Auth/Index";*/
+                }
+                else {
+                    alert("Failed to Login");
+                }
+            }).fail((result) => {
+                console.log(result);
+                if (result != 200) {
+                    alert("Failed to Login");
+                }
+            })
+        }
+
         function Submit() {
             var User = new Object();
             User.FirstName = $("#fisrtName").val();
