@@ -9,6 +9,7 @@ namespace LeaveRequest.ViewModels
     public class RegisterVM
     {
         //public string NIK { get; set; }
+        [Required(ErrorMessage = "Tidak boleh kosong"), MaxLength(30, ErrorMessage = "Maksimal 30 karakter"), RegularExpression(@"^\D+$", ErrorMessage = "Tidak boleh berupa angka")]
         public string FirstName { get; set; }
         public string LastName { get; set; }
 

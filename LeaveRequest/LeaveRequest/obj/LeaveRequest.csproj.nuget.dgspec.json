@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\BOOTCAMP\\PROJEK\\LeaveRequest\\LeaveRequest\\LeaveRequest\\LeaveRequest.csproj": {}
+    "D:\\LeaveRequestProject\\LeaveRequest\\LeaveRequest\\LeaveRequest\\LeaveRequest.csproj": {}
   },
   "projects": {
-    "D:\\BOOTCAMP\\PROJEK\\LeaveRequest\\LeaveRequest\\LeaveRequest\\LeaveRequest.csproj": {
+    "D:\\LeaveRequestProject\\LeaveRequest\\LeaveRequest\\LeaveRequest\\LeaveRequest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BOOTCAMP\\PROJEK\\LeaveRequest\\LeaveRequest\\LeaveRequest\\LeaveRequest.csproj",
+        "projectUniqueName": "D:\\LeaveRequestProject\\LeaveRequest\\LeaveRequest\\LeaveRequest\\LeaveRequest.csproj",
         "projectName": "LeaveRequest",
-        "projectPath": "D:\\BOOTCAMP\\PROJEK\\LeaveRequest\\LeaveRequest\\LeaveRequest\\LeaveRequest.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\BOOTCAMP\\PROJEK\\LeaveRequest\\LeaveRequest\\LeaveRequest\\obj\\",
+        "projectPath": "D:\\LeaveRequestProject\\LeaveRequest\\LeaveRequest\\LeaveRequest\\LeaveRequest.csproj",
+        "packagesPath": "C:\\Users\\Hafidz Naufal\\.nuget\\packages\\",
+        "outputPath": "D:\\LeaveRequestProject\\LeaveRequest\\LeaveRequest\\LeaveRequest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hafidz Naufal\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -113,7 +113,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

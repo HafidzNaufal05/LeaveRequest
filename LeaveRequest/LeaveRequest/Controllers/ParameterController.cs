@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LeaveRequest.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ParameterController : BaseController<Parameter, ParameterRepository, int>
