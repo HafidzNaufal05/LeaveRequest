@@ -64,6 +64,8 @@ namespace LeaveRequest.Context
                 .HasOne(Employee => Employee.Department)
                 .WithMany(Department => Department.Employees)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<EmployeeRole>().HasKey(g => new { g.Id});
         } 
     }
 }

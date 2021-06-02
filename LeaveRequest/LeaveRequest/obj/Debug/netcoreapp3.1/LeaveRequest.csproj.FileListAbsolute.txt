@@ -52,3 +52,14 @@ D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.
 D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
 D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
+D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\System.Web.Http.dll
+D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\System.Web.Http.WebHost.dll
+D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Microsoft.Web.Infrastructure.dll
+D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\Swashbuckle.Core.dll
+D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\bin\Debug\netcoreapp3.1\WebActivatorEx.dll
+D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequest\obj\Debug\netcoreapp3.1\LeaveRequest.MvcApplicationPartsAssemblyInfo.cs

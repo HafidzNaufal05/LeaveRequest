@@ -67,8 +67,9 @@ namespace LeaveRequest.Controllers
                 parameter = parameterRepository.getByName("Diatas lima tahun");
             }
 
+            //EmployeeRole employeeRole = new EmployeeRole();
             var dbparams = new DynamicParameters();
-            dbparams.Add("NIK", registerVM.NIK, DbType.String);
+            //dbparams.Add("NIK", registerVM.NIK, DbType.String);
             dbparams.Add("FirstName", registerVM.FirstName, DbType.String);
             dbparams.Add("LastName", registerVM.LastName, DbType.String);
             dbparams.Add("BirthDate", registerVM.BirthDate, DbType.DateTime);
@@ -81,7 +82,7 @@ namespace LeaveRequest.Controllers
             dbparams.Add("RemainingQuota", parameter.Value, DbType.Int32);
             dbparams.Add("DepartmentId", registerVM.DepartmentId, DbType.Int32);
             dbparams.Add("NIK_Manager", registerVM.NIK_Manager, DbType.String);
-            dbparams.Add("Role", registerVM.RoleId, DbType.Int32);
+            dbparams.Add("Role", 1, DbType.Int32);
             dbparams.Add("Password", HashPassword, DbType.String);
 
             var result = Task.FromResult(dapper.Insert<int>("[dbo].[SP_Register]", dbparams, commandType: CommandType.StoredProcedure));
@@ -144,7 +145,7 @@ namespace LeaveRequest.Controllers
                 var getEmp = myContext.Employees.Where(e => e.NIK == CheckAccount.NIK).FirstOrDefault();
                 var jwt = new JwtService(configuration);
                 var token = jwt.GenerateSecurityToken(CheckAccount.FirstName, CheckAccount.Email, "Admin");
-                var SendEmail = new SendingEmail(myContext);
+                var SendEmail = new EmailRequest(myContext);
                 SendEmail.SendForgotPassword(token, getEmp);
                 return Ok("Check Your Email");
             }
@@ -154,7 +155,7 @@ namespace LeaveRequest.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("ResetPassword")]
         public ActionResult ResetPassword(string email, string newPassword, string confirmPassword)
         {
