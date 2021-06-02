@@ -155,7 +155,7 @@ namespace LeaveRequest.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("ResetPassword")]
         public ActionResult ResetPassword(string email, string newPassword, string confirmPassword)
         {
