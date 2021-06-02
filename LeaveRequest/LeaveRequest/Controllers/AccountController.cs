@@ -101,7 +101,7 @@ namespace LeaveRequest.Controllers
             {
                 var jwt = new JwtService(configuration);
                 var token = jwt.GenerateSecurityToken(result.Name, result.Email, result.Role);
-                return Ok(new { token });
+                return Ok(token);
             }
 
             return BadRequest("Failed to login");

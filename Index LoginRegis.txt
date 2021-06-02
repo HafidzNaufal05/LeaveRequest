@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "Welcome!";
 }
 
@@ -280,8 +280,13 @@
                 data: Login
             }).done((result) => {
                 console.log("ok");
-                alert("Successed to Login");
-                window.location.href = result;
+                if (result == 200) {
+                    alert("Successed to Login");
+                    window.location.href = "https://localhost:44383/Auth/Index";
+                }
+                else {
+                    alert("Failed to Login");
+                }
             }).fail((result) => {
                 console.log(result);
                 if (result != 200) {

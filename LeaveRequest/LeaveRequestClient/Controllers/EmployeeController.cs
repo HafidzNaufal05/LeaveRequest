@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace LeaveRequestClient.Controllers
 {
-    public class HomeController : Controller
+    public class EmployeeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public EmployeeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }

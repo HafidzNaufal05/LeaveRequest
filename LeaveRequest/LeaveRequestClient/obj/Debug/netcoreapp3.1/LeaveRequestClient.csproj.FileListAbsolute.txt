@@ -85,3 +85,4 @@ D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequestClient\obj\Debug\netcor
 D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequestClient\obj\Debug\netcoreapp3.1\LeaveRequestClient.dll
 D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequestClient\obj\Debug\netcoreapp3.1\LeaveRequestClient.pdb
 D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequestClient\obj\Debug\netcoreapp3.1\LeaveRequestClient.genruntimeconfig.cache
+D:\BOOTCAMP\PROJEK\LeaveRequest\LeaveRequest\LeaveRequestClient\obj\Debug\netcoreapp3.1\Razor\Views\Employee\Index.cshtml.g.cs

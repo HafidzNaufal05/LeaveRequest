@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "Change Password!";
 }
 
@@ -13,7 +13,6 @@
 <body>
     <div class="main">
         <p class="sign" align="center">Reset Password</p>
-        <p>@ViewData["token"]</p>
         <form class="form1" id="formResetPassword" action="#">
             <input class="un" type="email" align="center" id="email" placeholder="Email">
             <input class="pass" type="password" align="center" id="password" placeholder="Password">

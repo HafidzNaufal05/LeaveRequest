@@ -1,4 +1,5 @@
 ﻿using LeaveRequestClient.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,6 +21,8 @@ namespace LeaveRequestClient.Controllers
 
         public IActionResult Index()
         {
+            var token = HttpContext.Session.GetString("token");
+            ViewData["token"] = token;
             return View();
         }
 
