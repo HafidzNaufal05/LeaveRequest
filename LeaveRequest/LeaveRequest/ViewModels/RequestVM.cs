@@ -10,7 +10,7 @@ namespace LeaveRequest.ViewModels
     {
         //public int Id { get; set; }
         public string EmployeeNIK { get; set; }
-        public LeaveCategory LeaveCategory { get; set; }
+        public string LeaveCategory { get; set; }
 
         [Required(ErrorMessage = "Tidak boleh kosong"), DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
@@ -23,9 +23,9 @@ namespace LeaveRequest.ViewModels
         public string Notes { get; set; }
         //public int RemainingQuota { get; set; }
     }
-    public enum LeaveCategory
-    {
-        SpecialRequest,
-        NormalRequest
-    }
+    //public enum LeaveCategory
+    //{
+    //    SpecialRequest,
+    //    NormalRequest
+    //}
 }

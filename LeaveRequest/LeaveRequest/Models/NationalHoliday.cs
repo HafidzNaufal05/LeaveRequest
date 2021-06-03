@@ -12,10 +12,7 @@ namespace LeaveRequest.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required(ErrorMessage = "Tidak boleh kosong")]
         public string Name { get; set; }
-        [DataType(DataType.Date)] 
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime Date { get; set; }
     }
 }

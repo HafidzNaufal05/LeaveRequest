@@ -13,33 +13,23 @@ namespace LeaveRequest.Models
     {
         [Key]
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "Tidak boleh kosong")]
-        public LeaveCategory LeaveCategory { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+        public string LeaveCategory { get; set; }
         public DateTime StartDate { get; set; }
-
-        [Required(ErrorMessage = "Tidak boleh kosong"), DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime EndDate { get; set; }
-
-        [Required(ErrorMessage = "Tidak boleh kosong")]
         public string ReasonRequest { get; set; }
         public Employee Employee { get; set; }
-
-        [Required(ErrorMessage = "Tidak boleh kosong")]
         public string Notes { get; set; }
-        public StatusRequest StatusRequest { get; set; }
+        //public StatusRequest StatusRequest { get; set; }
+        public string StatusRequest { get; set; }
     }
 
-    public enum StatusRequest
-    {
-        Waiting,
-        ApprovedByManager,
-        RejectByManager,
-        ApprovedByHRD,
-        RejectByHRD
-    }
+    //public enum StatusRequest
+    //{
+    //    Waiting,
+    //    ApprovedByManager,
+    //    RejectByManager,
+    //    ApprovedByHRD,
+    //    RejectByHRD
+    //}
 
 }

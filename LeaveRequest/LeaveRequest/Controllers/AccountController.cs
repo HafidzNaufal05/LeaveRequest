@@ -26,7 +26,7 @@ namespace LeaveRequest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : BaseController<Account,AccountRepository, int>
+    public class AccountController : BaseController<Account, AccountRepository, int>
     {
         private AccountRepository accountRepository;
         private ParameterRepository parameterRepository;
@@ -49,23 +49,23 @@ namespace LeaveRequest.Controllers
         {
             var HashPassword = Hashing.HashPassword(registerVM.Password);
 
-            DateTime DateJoin = registerVM.JoinDate;
-            DateTime Today = DateTime.Today;
-            TimeSpan ts = new TimeSpan();
-            ts = Today.Subtract(DateJoin);
-            Parameter parameter = new Parameter();
-            if (ts.Days < 365)
-            {
-                parameter = parameterRepository.getByName("Dibawah satu tahun");
-            }
-            else if (ts.Days >= 365 && ts.Days < 1826)
-            {
-                parameter = parameterRepository.getByName("Diatas satu tahun");
-            }
-            else if (ts.Days >= 1826)
-            {
-                parameter = parameterRepository.getByName("Diatas lima tahun");
-            }
+            //DateTime DateJoin = registerVM.JoinDate;
+            //DateTime Today = DateTime.Today;
+            //TimeSpan ts = new TimeSpan();
+            //ts = Today.Subtract(DateJoin);
+            //Parameter parameter = new Parameter();
+            //if (ts.Days < 365)
+            //{
+            //    parameter = parameterRepository.getByName("Working Period Under 1 Year");
+            //}
+            //else if (ts.Days >= 365 && ts.Days < 1826)
+            //{
+            //    parameter = parameterRepository.getByName("Working Period Above 1 Year");
+            //}
+            //else if (ts.Days >= 1826)
+            //{
+            //    parameter = parameterRepository.getByName("Working Period Above 5 Years");
+            //}
 
             //EmployeeRole employeeRole = new EmployeeRole();
             var dbparams = new DynamicParameters();
@@ -79,13 +79,13 @@ namespace LeaveRequest.Controllers
             dbparams.Add("PhoneNumber", registerVM.PhoneNumber, DbType.String);
             dbparams.Add("Email", registerVM.Email, DbType.String);
             dbparams.Add("JoinDate", registerVM.JoinDate, DbType.DateTime);
-            dbparams.Add("RemainingQuota", parameter.Value, DbType.Int32);
+            //dbparams.Add("RemainingQuota", parameter.Value, DbType.Int32);
             dbparams.Add("DepartmentId", registerVM.DepartmentId, DbType.Int32);
-            dbparams.Add("NIK_Manager", registerVM.NIK_Manager, DbType.String);
-            dbparams.Add("Role", 1, DbType.Int32);
+            //dbparams.Add("NIK_Manager", registerVM.NIK_Manager, DbType.String);
+            //dbparams.Add("Role", 1, DbType.Int32);
             dbparams.Add("Password", HashPassword, DbType.String);
 
-            var result = Task.FromResult(dapper.Insert<int>("[dbo].[SP_Register]", dbparams, commandType: CommandType.StoredProcedure));
+            var result = Task.FromResult(dapper.Insert<int>("[dbo].[SP_RegisterEmp]", dbparams, commandType: CommandType.StoredProcedure));
             return Ok(new { Status = "Success", Message = "User has been registered seccessfully" });
         }
 

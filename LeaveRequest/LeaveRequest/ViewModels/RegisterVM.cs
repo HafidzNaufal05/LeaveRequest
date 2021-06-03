@@ -27,7 +27,7 @@ namespace LeaveRequest.ViewModels
         public DateTime JoinDate { get; set; }
         //public int RemainingQuota { get; set; }
         public string DepartmentId { get; set; }
-        public string NIK_Manager { get; set; }
+        //public string NIK_Manager { get; set; }
         //public string RoleId { get; set; }
         public string Password { get; set; }
     }

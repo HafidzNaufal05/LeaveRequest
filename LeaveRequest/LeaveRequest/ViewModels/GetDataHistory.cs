@@ -31,12 +31,13 @@ namespace LeaveRequest.ViewModels
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime JoinDate { get; set; }
         public int RemainingQuota { get; set; }
+
 #nullable enable
         public string? NIK_Manager { get; set; }
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Tidak boleh kosong")]
-        public LeaveCategory LeaveCategory { get; set; }
+        public string LeaveCategory { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime StartDate { get; set; }
@@ -50,6 +51,6 @@ namespace LeaveRequest.ViewModels
 
         [Required(ErrorMessage = "Tidak boleh kosong")]
         public string Notes { get; set; }
-        public StatusRequest StatusRequest { get; set; }
+        public string StatusRequest { get; set; }
     }
 }
