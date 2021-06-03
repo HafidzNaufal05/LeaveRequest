@@ -260,6 +260,15 @@
 @section scripts{
 
     <script>
+
+        var retrievedObject = localStorage.getItem('LoginRes');
+        console.log('retrievedObject: ', JSON.parse(retrievedObject));
+        currentLocation = window.location.pathname;
+        console.log(currentLocation);
+
+        if (retrievedObject != null) {
+            window.location.replace('https://localhost:44383' + retrievedObject.replace(/^"(.*)"$/, '$1'))
+        }
         $(document).ready(function () {
             $("#formLogin").submit(function (event) {
                 event.preventDefault();
@@ -281,6 +290,7 @@
             }).done((result) => {
                 console.log("ok");
                 alert("Successed to Login");
+                localStorage.setItem('LoginRes', JSON.stringify(result));
                 window.location.href = result;
             }).fail((result) => {
                 console.log(result);

@@ -22,6 +22,8 @@ namespace LeaveRequestClient.Controllers
 
         public IActionResult Index()
         {
+            var token = HttpContext.Session.GetString("token");
+            ViewData["token"] = token;
             return View();
         }
 

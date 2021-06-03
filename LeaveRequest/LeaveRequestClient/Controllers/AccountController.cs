@@ -32,22 +32,20 @@ namespace LeaveRequestClient.Controllers
         }
 
         [HttpPost]
-        public HttpStatusCode ForgotPassword(string email)
+        public HttpStatusCode ForgotPassword(ForgotPasswordVM forgotPasswordVM)
         {
-            var url = "https://localhost:44338/api/Account/ForgotPassword?email=" + email;
             var httpClient = new HttpClient();
-            StringContent content = new StringContent(JsonConvert.SerializeObject(email), Encoding.UTF8, "application/json");
-            var result = httpClient.PostAsync(url, content).Result;
+            StringContent content = new StringContent(JsonConvert.SerializeObject(forgotPasswordVM), Encoding.UTF8, "application/json");
+            var result = httpClient.PostAsync("https://localhost:44338/api/Account/ForgotPassword", content).Result;
             return result.StatusCode;
         }
 
         [HttpPost]
-        public HttpStatusCode ResetPassword(string email, string newPassword, string confirmPassword)
+        public HttpStatusCode ResetPassword(ResetPasswordVM resetPasswordVM)
         {
-            var url = "https://localhost:44338/api/Account/ResetPassword?email=" + email + "&newPassword=" + newPassword + "&confirmPassword=" + confirmPassword;
             var httpClient = new HttpClient();
-            StringContent content = new StringContent(JsonConvert.SerializeObject(email), Encoding.UTF8, "application/json");
-            var result = httpClient.PostAsync(url, content).Result;
+            StringContent content = new StringContent(JsonConvert.SerializeObject(resetPasswordVM), Encoding.UTF8, "application/json");
+            var result = httpClient.PostAsync("https://localhost:44338/api/Account/ResetPassword", content).Result;
             var token = HttpContext.Session.GetString("token");
             ViewData["token"] = token;
             return result.StatusCode;
@@ -59,6 +57,7 @@ namespace LeaveRequestClient.Controllers
             var httpClient = new HttpClient();
             StringContent content = new StringContent(JsonConvert.SerializeObject(loginVM), Encoding.UTF8, "application/json");
             var result = httpClient.PostAsync("https://localhost:44338/api/Account/Login", content).Result;
+         
 
             var token = result.Content.ReadAsStringAsync().Result;
             HttpContext.Session.SetString("token", token);
@@ -81,9 +80,13 @@ namespace LeaveRequestClient.Controllers
                 {
                     return Url.Action("Index", "Admin");
                 }
-                else
+                else if (role == "Employee")
                 {
                     return Url.Action("Index", "Employee");
+                }
+                else
+                {
+                    return Url.Action("Index", "Home");
                 }
             }
             else

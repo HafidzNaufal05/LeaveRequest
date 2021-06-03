@@ -89,6 +89,7 @@ namespace LeaveRequest.Controllers
             return Ok(new { Status = "Success", Message = "User has been registered seccessfully" });
         }
 
+
         [HttpPost("Login")]
         public ActionResult Login(LoginVM loginVM)
         {

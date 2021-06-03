@@ -5,3 +5,14 @@
 }
 
 <p>INI HRD</p>
+
+<script>
+    var retrievedObject = localStorage.getItem('LoginRes');
+    console.log('retrievedObject: ', JSON.parse(retrievedObject));
+    currentLocation = window.location.pathname;
+    console.log(currentLocation);
+
+    if (retrievedObject != '"/HRD"') {
+        window.location.replace('https://localhost:44383' + retrievedObject.replace(/^"(.*)"$/, '$1'))
+    }
+</script>
