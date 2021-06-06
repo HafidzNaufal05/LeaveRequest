@@ -38,6 +38,7 @@ namespace LeaveRequest.Repositories.Data
                 myContext.Update(employeeRole);
             }
             Global.resUpdate = myContext.SaveChanges();
+
             return 1;
         }
     }

@@ -270,9 +270,9 @@ namespace LeaveRequest.Repositories.Data
         public List<GetDataHistory> RequestHistory()
         {
             var dbparams = new DynamicParameters();
-            dbparams.Add("RejectManager", 2);
-            dbparams.Add("ApproveHRD", 3);
-            dbparams.Add("RejectHRD", 4);
+            dbparams.Add("RejectManager", "Reject by Manager", DbType.String);
+            dbparams.Add("ApproveHRD", "Approve by HRD", DbType.String);
+            dbparams.Add("RejectHRD", "Reject by HRD", DbType.String);
 
             var result = Task.FromResult(dapper.GetAll<GetDataHistory>("[dbo].[SP_GetHistoryRequest]", dbparams,
                 commandType: CommandType.StoredProcedure)).Result;
@@ -282,11 +282,22 @@ namespace LeaveRequest.Repositories.Data
         public List<GetDataHistory> RequestActual()
         {
             var dbparams = new DynamicParameters();
-            dbparams.Add("Waiting", 0);
-            dbparams.Add("ApproveManager", 1);
+            dbparams.Add("Waiting", "Waiting", DbType.String);
+            dbparams.Add("ApproveManager","Approve by Manager",  DbType.String);
             var result = Task.FromResult(dapper.GetAll<GetDataHistory>("[dbo].[SP_GetHistoryactual]", dbparams,
                 commandType: CommandType.StoredProcedure)).Result;
             return result.ToList();
+        }
+        
+        public List<Request> Getdataapprove(int Id)
+        {
+/*            var dbparams = new DynamicParameters();
+            dbparams.Add("Id", Id);
+            var result = Task.FromResult(dapper.Get<GetApproveVM>("[dbo].[SP_GetApproveData1]", dbparams,
+                commandType: CommandType.StoredProcedure)).Result;*/
+            var data = myContext.Requests.Include(a => a.Employee).Where(e => e.Id == Id).ToList();
+            //var a = data.FirstOrDefault();
+            return data;
         }
 
     }

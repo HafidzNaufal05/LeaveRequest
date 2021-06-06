@@ -1,349 +1,62 @@
-@{
-    ViewData["Title"] = "Welcome!";
-}
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-    <title>Sign in</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Creative - Start Bootstrap Theme</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="~/AssetTamplate/assets/favicon.ico" />
+    <!-- Bootstrap Icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+    <!-- SimpleLightbox plugin CSS-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="~/AssetTamplate/css/styles.css" rel="stylesheet" />
 </head>
-
-<body>
-    <div class="main">
-        <p class="sign" align="center">Sign in</p>
-        <form class="form1">
-            <input class="un " type="text" align="center" id="emailLogin" name="emailLogin" placeholder="Email">
-            <input class="pass" type="password" align="center" id="passwordLogin" name="passwordLogin" placeholder="Password">
-            <button class="submit btn btn-primary" onclick="Login()">Sign in</button>
-            @*<a class="submit" align="center">Sign in</a>*@
-            <div class="menuAccount" align="center">
-                <a style="color: purple !important" href="javascript:void(0)" class="btn bg-transparent" data-toggle="modal" data-target="#regisModal">Register</a>
-                <a style="color: purple !important" href="javascript:void(0)" class="btn bg-transparent" data-toggle="modal" data-target="#forgotpassword">Forgot Password?</a>
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Team</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Auth" action="Index">Login</a></li>
+                </ul>
             </div>
-        </form>
-    </div>
+        </div>
+    </nav>
+    <!-- Masthead-->
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 h-100">
+            <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                <div class="col-lg-8 align-self-end">
+                    <h1 class="text-white font-weight-bold">Your Favorite Place for Free Bootstrap Themes</h1>
+                    <hr class="divider" />
+                </div>
+                <div class="col-lg-8 align-self-baseline">
+                    <p class="text-white-75 mb-5">Start Bootstrap can help you build better websites using the Bootstrap framework! Just download a theme and start customizing, no strings attached!</p>
+                    <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Footer-->
+    <footer class="bg-light py-5">
+        <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2021 - Company Name</div></div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SimpleLightbox plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="~/AssetTamplate/js/scripts.js"></script>
 </body>
-
-<!--MODAL REGISTER-->
-<div class="modal fade" id="regisModal" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLiveLabel">Register Employee</h5>
-                    <button id="buttonClose" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="registerform" action="Account/Register">
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">First Name</label>
-                            <input type="text" class="form-control" id="fisrtName" name="fisrtName" placeholder="First Name">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Birth Date</label>
-                            <input type="date" class="form-control" id="birthDate" name="birthDate" placeholder="Birth Date">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Gender</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
-                                <label class="form-check-label" for="male">Male</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
-                                <label class="form-check-label" for="female">Female</label>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="address" name="address" placeholder="Address">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Matirial Status</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="materialStatus" id="single" value="Single">
-                                <label class="form-check-label" for="single">Single</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="materialStatus" id="married" value="Married">
-                                <label class="form-check-label" for="married">Married</label>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Phone Number</label>
-                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone Numbe">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Join Date</label>
-                            <input type="date" class="form-control" id="joinDate" name="joinDate" placeholder="Join Datee">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Department ID</label>
-                            <input type="text" class="form-control" id="departmentId" name="departmentId" placeholder="Department ID">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Manager NIK</label>
-                            <input type="text" class="form-control" id="ManagerNIK" name="ManagerNIK" placeholder="Manager NIK">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Password</label>
-                            <input type="text" class="form-control" id="password" name="password" placeholder="Password">
-                        </div>
-
-                        <div class="modal-footer">
-                            <button id="submit" class="btn btn-primary" onclick="Submit()">Submit</button>
-                            <button id="close" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--MODAL FORGOT-->
-<div class="modal fade" id="forgotpassword" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addModalLabel">Forgot Password</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="forgotform" action="Account/ForgotPassword">
-                    <div class="form-group">
-                        <label for="email" class="col-form-label">Email</label>
-                        <input type="text" class="form-control" id="emailforgot" name="emailforgot">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="ForgotPassword()">Submit</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<style>
-    body {
-        background-color: #F3EBF6;
-        font-family: 'Ubuntu', sans-serif;
-    }
-
-    .main {
-        background-color: #FFFFFF;
-        width: 400px;
-        height: 400px;
-        margin: 7em auto;
-        border-radius: 1.5em;
-        box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
-    }
-
-    .sign {
-        padding-top: 40px;
-        color: #8C55AA;
-        font-family: 'Ubuntu', sans-serif;
-        font-weight: bold;
-        font-size: 23px;
-    }
-
-    .un {
-        width: 76%;
-        color: rgb(38, 50, 56);
-        font-weight: 700;
-        font-size: 14px;
-        letter-spacing: 1px;
-        background: rgba(136, 126, 126, 0.04);
-        padding: 10px 20px;
-        border: none;
-        border-radius: 20px;
-        outline: none;
-        box-sizing: border-box;
-        border: 2px solid rgba(0, 0, 0, 0.02);
-        margin-bottom: 50px;
-        margin-left: 46px;
-        text-align: center;
-        margin-bottom: 27px;
-        font-family: 'Ubuntu', sans-serif;
-    }
-
-    form.form1 {
-        padding-top: 40px;
-    }
-
-    .pass {
-        width: 76%;
-        color: rgb(38, 50, 56);
-        font-weight: 700;
-        font-size: 14px;
-        letter-spacing: 1px;
-        background: rgba(136, 126, 126, 0.04);
-        padding: 10px 20px;
-        border: none;
-        border-radius: 20px;
-        outline: none;
-        box-sizing: border-box;
-        border: 2px solid rgba(0, 0, 0, 0.02);
-        margin-bottom: 50px;
-        margin-left: 46px;
-        text-align: center;
-        margin-bottom: 27px;
-        font-family: 'Ubuntu', sans-serif;
-    }
-
-
-        .un:focus, .pass:focus {
-            border: 2px solid rgba(0, 0, 0, 0.18) !important;
-        }
-
-    .submit {
-        cursor: pointer;
-        border-radius: 5em;
-        color: #fff;
-        background: linear-gradient(to right, #9C27B0, #E040FB);
-        border: 0;
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-bottom: 10px;
-        padding-top: 10px;
-        font-family: 'Ubuntu', sans-serif;
-        margin-left: 35%;
-        font-size: 13px;
-        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
-    }
-
-    .menuAccount {
-        text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
-        color: #E1BEE7;
-        padding-top: 15px;
-    }
-
-    a {
-        text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
-        color: #E1BEE7;
-        text-decoration: none
-    }
-
-    @@media (max-width: 600px) {
-        .main {
-            border-radius: 0px;
-        }
-</style>
-
-@section scripts{
-
-    <script>
-        function Login() {
-            var Login = new Object();
-            Login.Email = $("#emailLogin").val();
-            Login.Password = $("#passwordLogin").val();
-            console.log(Login);
-            $.ajax({
-                type: 'post',
-                url: '/Account/Login',
-                data: Login
-            }).done((result) => {
-                console.log("ok");
-                if (result == 200) {
-                    alert("Successed to Login");
-                    /*window.location.href = "https://localhost:44306/Auth/Index";*/
-                }
-                else {
-                    alert("Failed to Login");
-                }
-            }).fail((result) => {
-                console.log(result);
-                if (result != 200) {
-                    alert("Failed to Login");
-                }
-            })
-        }
-
-        function Submit() {
-            var User = new Object();
-            User.FirstName = $("#fisrtName").val();
-            User.LastName = $("#lastName").val();
-            User.BirthDate = $("#birthDate").val();
-            User.Gender = $('input[name=gender]:checked').val()
-            User.Address = $("#address").val();
-            User.MaritialStatus = $('input[name=materialStatus]:checked').val()
-            User.PhoneNumber = $("#phoneNumber").val();
-            User.Email = $("#email").val();
-            User.JoinDate = $("#joinDate").val();
-            User.DepartmentId = $("#departmentId").val();
-            User.NIK_Manager = $("#ManagerNIK").val();
-            User.Password = $("#password").val();
-            $.ajax({
-                type: 'post',
-                url: '/Account/Register',
-                data: User
-            }).done((result) => {
-                console.log(result);
-                if (result == 200) {
-                    alert("Successed to Add Data!");
-                    $('#regisModal').modal('hide');
-                    $("#fisrtName").val(null);
-                    $("#lastname").val(null);
-                    $("#birthdate").val(null);
-                    $('input[name=gender]:checked').val(null);
-                    $("#address").val(null);
-                    $('input[name=materialStatus]:checked').val(null);
-                    $("#phoneNumber").val(null);
-                    $("#email").val(null);
-                    $("#joinDate").val(null);
-                    $("#departmentId").val(null);
-                    $("#ManagerNIK").val(null);
-                    $("#password").val(null);
-                }
-            }).fail((result) => {
-                console.log(result);
-                alert("Failed to Add Data!");
-            })
-        }
-
-        function ForgotPassword() {
-            var User = new Object();
-            User.Email = $("#emailforgot").val();
-            $.ajax({
-                type: 'post',
-                url: '/Account/ForgotPassword',
-                data: User
-            }).done((result) => {
-                if (result == 200) {
-                    alert("Check Your Email for New Password!");
-                }
-            }).fail((result) => {
-                console.log(result);
-                alert("Failed to Send Email!");
-            })
-        }
-    </script>
-
-}
+</html>

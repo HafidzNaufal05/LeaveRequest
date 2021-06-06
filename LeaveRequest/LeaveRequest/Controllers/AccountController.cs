@@ -48,28 +48,7 @@ namespace LeaveRequest.Controllers
         public ActionResult Registration(RegisterVM registerVM)
         {
             var HashPassword = Hashing.HashPassword(registerVM.Password);
-
-            //DateTime DateJoin = registerVM.JoinDate;
-            //DateTime Today = DateTime.Today;
-            //TimeSpan ts = new TimeSpan();
-            //ts = Today.Subtract(DateJoin);
-            //Parameter parameter = new Parameter();
-            //if (ts.Days < 365)
-            //{
-            //    parameter = parameterRepository.getByName("Working Period Under 1 Year");
-            //}
-            //else if (ts.Days >= 365 && ts.Days < 1826)
-            //{
-            //    parameter = parameterRepository.getByName("Working Period Above 1 Year");
-            //}
-            //else if (ts.Days >= 1826)
-            //{
-            //    parameter = parameterRepository.getByName("Working Period Above 5 Years");
-            //}
-
-            //EmployeeRole employeeRole = new EmployeeRole();
             var dbparams = new DynamicParameters();
-            //dbparams.Add("NIK", registerVM.NIK, DbType.String);
             dbparams.Add("FirstName", registerVM.FirstName, DbType.String);
             dbparams.Add("LastName", registerVM.LastName, DbType.String);
             dbparams.Add("BirthDate", registerVM.BirthDate, DbType.DateTime);
@@ -79,10 +58,7 @@ namespace LeaveRequest.Controllers
             dbparams.Add("PhoneNumber", registerVM.PhoneNumber, DbType.String);
             dbparams.Add("Email", registerVM.Email, DbType.String);
             dbparams.Add("JoinDate", registerVM.JoinDate, DbType.DateTime);
-            //dbparams.Add("RemainingQuota", parameter.Value, DbType.Int32);
             dbparams.Add("DepartmentId", registerVM.DepartmentId, DbType.Int32);
-            //dbparams.Add("NIK_Manager", registerVM.NIK_Manager, DbType.String);
-            //dbparams.Add("Role", 1, DbType.Int32);
             dbparams.Add("Password", HashPassword, DbType.String);
 
             var result = Task.FromResult(dapper.Insert<int>("[dbo].[SP_RegisterEmp]", dbparams, commandType: CommandType.StoredProcedure));
@@ -100,15 +76,15 @@ namespace LeaveRequest.Controllers
             if (Hashing.ValidatePassword(loginVM.Password, result.Password))
             {
                 var jwt = new JwtService(configuration);
-                var token = jwt.GenerateSecurityToken(result.Name, result.Email, result.Role);
-                return Ok(new { token });
+                var token = jwt.GenerateSecurityToken(result.NIK, result.Email, result.Role);
+                return Ok(token);
             }
 
             return BadRequest("Failed to login");
 
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("ChangePassword")]
         public ActionResult ChangePassword(string email, string oldPassword, string newPassword)
         {
@@ -137,10 +113,10 @@ namespace LeaveRequest.Controllers
 
 
         [HttpPost("ForgotPassword")]
-        public ActionResult ForgotPassword(string email)
+        public ActionResult ForgotPassword(ForgotPasswordVM forgotPasswordVM)
         {
-            var CheckAccount = myContext.Employees.SingleOrDefault(e => e.Email == email);
-            if (CheckAccount.Email == email)
+            var CheckAccount = myContext.Employees.SingleOrDefault(e => e.Email == forgotPasswordVM.Email);
+            if (CheckAccount.Email == forgotPasswordVM.Email)
             {
                 var getEmp = myContext.Employees.Where(e => e.NIK == CheckAccount.NIK).FirstOrDefault();
                 var jwt = new JwtService(configuration);
@@ -157,19 +133,19 @@ namespace LeaveRequest.Controllers
 
         //[Authorize]
         [HttpPost("ResetPassword")]
-        public ActionResult ResetPassword(string email, string newPassword, string confirmPassword)
+        public ActionResult ResetPassword(ResetPasswordVM resetPasswordVM)
         {
-            var GetEmp = myContext.Employees.SingleOrDefault(e => e.Email == email);
-            var GetAcc = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == email);
+            var GetEmp = myContext.Employees.SingleOrDefault(e => e.Email == resetPasswordVM.Email);
+            var GetAcc = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == resetPasswordVM.Email);
             if (GetEmp.Email != null)
             {
-                if (newPassword == confirmPassword)
+                if (resetPasswordVM.newPassword == resetPasswordVM.confirmPassword)
                 {
-                    GetAcc.Password = Hashing.HashPassword(newPassword);
+                    GetAcc.Password = Hashing.HashPassword(resetPasswordVM.newPassword);
                     var save = myContext.SaveChanges();
                     if (save > 0)
                     {
-                        return Ok("Password Berhasil Dirubah");
+                        return Ok("Reset Password Has Been Successfuly");
                     }
                 }
                 else

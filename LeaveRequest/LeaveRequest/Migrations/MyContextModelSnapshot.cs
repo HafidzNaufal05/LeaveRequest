@@ -99,7 +99,7 @@ namespace LeaveRequest.Migrations
 
             modelBuilder.Entity("LeaveRequest.Models.EmployeeRole", b =>
                 {
-                    b.Property<int>("NIK")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -110,7 +110,7 @@ namespace LeaveRequest.Migrations
                     b.Property<int?>("RoleId")
                         .HasColumnType("int");
 
-                    b.HasKey("NIK");
+                    b.HasKey("Id");
 
                     b.HasIndex("EmployeeNIK");
 
@@ -168,6 +168,9 @@ namespace LeaveRequest.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("LeaveCategory")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
@@ -177,8 +180,8 @@ namespace LeaveRequest.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StatusRequest")
-                        .HasColumnType("int");
+                    b.Property<string>("StatusRequest")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -200,6 +203,24 @@ namespace LeaveRequest.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TB_M_Role");
+                });
+
+            modelBuilder.Entity("LeaveRequest.Models.SendEmail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TB_M_SendEmail");
                 });
 
             modelBuilder.Entity("LeaveRequest.Models.Account", b =>

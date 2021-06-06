@@ -32,8 +32,8 @@ namespace LeaveRequest.Handler
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Email, name),
-                    new Claim(ClaimTypes.Name, email),
+                    new Claim(ClaimTypes.Name, name),
+                    new Claim(ClaimTypes.Email, email),
                     new Claim(ClaimTypes.Role, role),
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(double.Parse(_expDate)),

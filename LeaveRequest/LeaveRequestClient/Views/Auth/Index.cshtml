@@ -1,5 +1,6 @@
 ﻿@{
-    ViewData["Title"] = "Change Password!";
+    ViewData["Title"] = "Sign In";
+    Layout= "AuthLayout";
 }
 
 <head>
@@ -12,16 +13,151 @@
 
 <body>
     <div class="main">
-        <p class="sign" align="center">Reset Password</p>
-        <form class="form1" id="resetPass" action="#">
-            <input class="un" type="email" align="center" id="email" placeholder="Email">
-            <input class="pass" type="password" align="center" id="password" placeholder="Password">
-            <input class="pass" type="password" align="center" id="newPassword" placeholder="Confirmation Password">
-            <button class="submit btn btn-primary" onclick="ResetPassword()">Submit</button>
-            @*<a class="submit" align="center">Submit</a>*@
+        <p class="sign" align="center">Sign in</p>
+        <form class="form1" id="formLogin">
+            <input class="un " type="text" align="center" id="emailLogin" name="emailLogin" placeholder="Email">
+            <input class="pass" type="password" align="center" id="passwordLogin" name="passwordLogin" placeholder="Password">
+            <button class="submit btn btn-primary" onclick="Login()">Sign in</button>
+            @*<a class="submit" align="center">Sign in</a>*@
+            <div class="menuAccount" align="center">
+                <a style="color: purple !important" href="javascript:void(0)" class="btn bg-transparent" data-toggle="modal" data-target="#regisModal">Register</a>
+                <a style="color: purple !important" href="javascript:void(0)" class="btn bg-transparent" data-toggle="modal" data-target="#forgotpassword">Forgot Password?</a>
+            </div>
         </form>
     </div>
 </body>
+
+<!--MODAL REGISTER-->
+<div class="modal fade" id="regisModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLiveLabel">Register Employee</h5>
+                    <button id="buttonClose" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerform" action="Account/Register">
+                        <div class="row">
+                            <div class="col-6">
+
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="fisrtName" name="fisrtName" placeholder="First Name">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput" class="form-label">Birth Date</label>
+                                    <input type="date" class="form-control" id="birthDate" name="birthDate" placeholder="Birth Date">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput" class="form-label">Gender</label>
+                                    <div style="display:flex">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
+                                            <label class="form-check-label" for="male">Male</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
+                                            <label class="form-check-label" for="female">Female</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="address" name="address" placeholder="Address">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput" class="form-label">Matirial Status</label>
+                                    <div style="display:flex">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="materialStatus" id="single" value="Single">
+                                            <label class="form-check-label" for="single">Single</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="materialStatus" id="married" value="Married">
+                                            <label class="form-check-label" for="married">Married</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-6">
+
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput" class="form-label">Phone Number</label>
+                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone Numbe">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput" class="form-label">Join Date</label>
+                                    <input type="date" class="form-control" id="joinDate" name="joinDate" placeholder="Join Datee">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput" class="form-label">Department ID</label>
+                                    <input type="text" class="form-control" id="departmentId" name="departmentId" placeholder="Department ID">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button id="submit" class="btn btn-primary" onclick="Submit()">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL FORGOT-->
+<div class="modal fade" id="forgotpassword" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Forgot Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="forgotform" action="Account/ForgotPassword">
+                    <div class="form-group">
+                        <label for="email" class="col-form-label">Email</label>
+                        <input type="text" class="form-control" id="emailforgot" name="emailforgot">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="ForgotPassword()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <style>
     body {
@@ -130,33 +266,113 @@
 </style>
 
 @section scripts{
+
     <script>
-        function ResetPassword() {
-            debugger
-            var ResetPassword = new Object();
-            ResetPassword.Email = $("#email").val();
-            ResetPassword.newPassword = $("#password").val();
-            ResetPassword.confirmPassword = $("#newPassword").val();
-            console.log(ResetPassword);
+        //session
+        var retrievedObject = localStorage.getItem('LoginRes');
+        console.log('retrievedObject: ', JSON.parse(retrievedObject));
+        currentLocation = window.location.pathname;
+        console.log(currentLocation);
+
+        if (retrievedObject != null) {
+            window.location.replace('https://localhost:44383' + retrievedObject.replace(/^"(.*)"$/, '$1'))
+        }
+
+        $(document).ready(function () {
+            $("#formLogin").submit(function (event) {
+                event.preventDefault();
+            });
+            $("#registerform").submit(function (event) {
+                event.preventDefault();
+            });
+        });
+
+        function Login() {
+            var Login = new Object();
+            Login.Email = $("#emailLogin").val();
+            Login.Password = $("#passwordLogin").val();
+            console.log(Login);
             $.ajax({
                 type: 'post',
-                url: '/Account/ResetPassword',
-                data: ResetPassword
+                url: '/Account/Login',
+                data: Login
             }).done((result) => {
-                console.log("ok");
-                if (result == 200) {
-                    alert("Password has been change!");
-                    window.location.href = "https://localhost:44306/Home/Index";
+                console.log("ok", result);
+                if (result == '/Employee' || result == '/Manager' || result == '/Admin' || result == '/HRD') {
+                    alert("Successed to Login");
+                    localStorage.setItem('LoginRes', JSON.stringify(result));
+                    window.location.href = result;
                 }
                 else {
                     alert("Failed to Login");
+                    $("#emailLogin").val(null);
+                    $("#passwordLogin").val(null);
                 }
             }).fail((result) => {
                 console.log(result);
-                if (result != 200) {
-                    alert("Failed to reset password");
+                alert("Failed to Login");
+            })
+        }
+
+        function Submit() {
+            var User = new Object();
+            User.FirstName = $("#fisrtName").val();
+            User.LastName = $("#lastName").val();
+            User.BirthDate = $("#birthDate").val();
+            User.Gender = $('input[name=gender]:checked').val()
+            User.Address = $("#address").val();
+            User.MaritialStatus = $('input[name=materialStatus]:checked').val()
+            User.PhoneNumber = $("#phoneNumber").val();
+            User.Email = $("#email").val();
+            User.JoinDate = $("#joinDate").val();
+            User.DepartmentId = $("#departmentId").val();
+            User.Password = $("#password").val();
+            console.log(User);
+            $.ajax({
+                type: 'POST',
+                url: '/Account/Register',
+                data: User
+            }).done((result) => {
+                if (result == 200) {
+                    console.log("Successed", result);
+                    alert("Successed to Add Data!");
+                    $("#fisrtName").val(null);
+                    $("#lastname").val(null);
+                    $("#birthdate").val(null);
+                    $('input[name=gender]:checked').val(null);
+                    $("#address").val(null);
+                    $('input[name=materialStatus]:checked').val(null);
+                    $("#phoneNumber").val(null);
+                    $("#email").val(null);
+                    $("#joinDate").val(null);
+                    $("#departmentId").val(null);
+                    $("#password").val(null);
+                    $('#regisModal').modal('hide');
                 }
+            }).fail((result) => {
+                console.log("Failed", result);
+                alert("Failed to Add Data!");
+            })
+        }
+
+        function ForgotPassword() {
+            var User = new Object();
+            User.Email = $("#emailforgot").val();
+            $.ajax({
+                type: 'post',
+                url: '/Account/ForgotPassword',
+                data: User
+            }).done((result) => {
+                if (result == 200) {
+                    alert("Check Your Email for New Password!");
+                    $('#forgotpassword').modal('hide');
+                }
+            }).fail((result) => {
+                console.log(result);
+                alert("Failed to Send Email!");
             })
         }
     </script>
+
 }
+
