@@ -1,5 +1,6 @@
 using LeaveRequest.Context;
 using LeaveRequest.Models;
+using LeaveRequest.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace LeaveRequest.Handler
         //}
 
 
-        public void SendRequestEmployee(Employee employee, int id)
+        public void SendRequestEmployee(Employee employee, /*int id,*/ RequestVM requestVM)
         {
             var SendEmail = myContext.SendEmails.Find(1);
 
@@ -41,10 +42,16 @@ namespace LeaveRequest.Handler
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.Credentials = new NetworkCredential(SendEmail.Name, SendEmail.Value);
 
-            smtp.Send(SendEmail.Name, employee.Email, "Leave Request", "\nThank You For You Request. Your Request Is Being Processed With ID : " + id);
+            smtp.Send(SendEmail.Name, employee.Email, "Leave Request", "\nThank you for you request." +
+                                                                        //"\nRequest ID : " + id +
+                                                                        "\nNIK : " + requestVM.EmployeeNIK +
+                                                                        "\nName : " + employee.FirstName +" "+ employee.LastName +
+                                                                        "\nStart Date : " + requestVM.StartDate +
+                                                                        "\nEnd Date : " + requestVM.EndDate +
+                                                                        "\nReason : " + requestVM.ReasonRequest);
         }
 
-        public void SendRequestManager(Employee manager, Employee employee, int id)
+        public void SendRequestManager(Employee manager, Employee employee, /*int id,*/ RequestVM requestVM)
         {
             var SendEmail = myContext.SendEmails.Find(1);
 
@@ -55,7 +62,14 @@ namespace LeaveRequest.Handler
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.Credentials = new NetworkCredential(SendEmail.Name, SendEmail.Value);
 
-            smtp.Send(SendEmail.Name, manager.Email, "Approval Leave Request", "\nEmployee with Name " + employee.FirstName + " " + employee.LastName + " And Id Request Is " + id + " Has Been Request. Please Approve Or Reject Employee Request ");
+            smtp.Send(SendEmail.Name, manager.Email, "Approval Leave Request", "\nEmployee has been requested." + 
+                                                                                "\nNIK : " + requestVM.EmployeeNIK +
+                                                                                "\nName : " + employee.FirstName + " " + employee.LastName +
+                                                                                //"\nRequest ID : " + id +
+                                                                                "\nStart Date : " + requestVM.StartDate +
+                                                                                "\nEnd Date : " + requestVM.EndDate +
+                                                                                "\nReason : " + requestVM.ReasonRequest +
+                                                                                "\nPlease response this request.");
         }
 
         /* public void SendApproveManager(Employee employee, int id)
@@ -72,7 +86,7 @@ namespace LeaveRequest.Handler
              smtp.Send(SendEmail.Name, employee.Email, "Approval Leave Request", "\n Manager has been approve with Employee Name is " + employee.FirstName + " " + employee.LastName + " And Id Request Is " + id + "Please approve or reject employee request");
          }*/
 
-        public void SendRequestHRD(Employee hrd, Employee employee, int id, string notes)
+        public void SendRequestHRD(Employee hrd, Employee employee, int id, Request data, string notes)
         {
             var SendEmail = myContext.SendEmails.Find(1);
 
@@ -83,10 +97,18 @@ namespace LeaveRequest.Handler
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.Credentials = new NetworkCredential(SendEmail.Name, SendEmail.Value);
 
-            smtp.Send(SendEmail.Name, hrd.Email, "Approval Leave Request", "\nManager has been approve with Employee Name is " + employee.FirstName + " " + employee.LastName + " And Id Request Is " + id + " Please approve or reject employee request" + "\nNotes : " + notes);
+            smtp.Send(SendEmail.Name, hrd.Email, "Approval Leave Request", "\nManager has been approve this request." +
+                                                                                "\nNIK : " + data.Employee.NIK +
+                                                                                "\nName : " + employee.FirstName + " " + employee.LastName +
+                                                                                "\nRequest ID : " + id +
+                                                                                "\nStart Date : " + data.StartDate +
+                                                                                "\nEnd Date : " + data.EndDate +
+                                                                                "\nReason : " + data.ReasonRequest +
+                                                                                "\nNotes : " + notes +
+                                                                                "\nPlease response this request.");
         }
 
-        public void SendApproveHRD(Employee manager, Employee employee, int id, string notes)
+        public void SendApproveHRD(Employee manager, Employee employee, Request data, string notes)
         {
             var SendEmail = myContext.SendEmails.Find(1);
 
@@ -97,11 +119,27 @@ namespace LeaveRequest.Handler
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.Credentials = new NetworkCredential(SendEmail.Name, SendEmail.Value);
 
-            smtp.Send(SendEmail.Name, employee.Email, "Approval Request ", "\nHello " + employee.FirstName + "  Your request with Id " + id + " has been approve" + "\nNotes : " + notes);
-            smtp.Send(SendEmail.Name, manager.Email, "Approval Request ", "\nLeave Request \n\nId : "+ id +"\nName : "+ employee.FirstName + " " +employee.LastName+"\nStatus : Has Been Approved \nNotes : "+ notes);
+            smtp.Send(SendEmail.Name, employee.Email, "Approval Request ", "\nLeave Request Data : " +
+                                                                                        "\nNIK : " + data.Employee.NIK +
+                                                                                        "\nName : " + employee.FirstName + " " + employee.LastName +
+                                                                                        "\nRequest ID : " + data.Id +
+                                                                                        "\nStart Date : " + data.StartDate +
+                                                                                        "\nEnd Date : " + data.EndDate +
+                                                                                        "\nReason : " + data.ReasonRequest +
+                                                                                        "\nManager NIK : " + manager.NIK +
+                                                                                        "\nStatus : Has Been Approved" +
+                                                                                        "\nNotes : " + notes);
+
+            smtp.Send(SendEmail.Name, manager.Email, "Approval Request ", "\nLeave Request \"\nNIK : " + data.Employee.NIK +
+                                                                                        "\nName : " + employee.FirstName + " " + employee.LastName +
+                                                                                        "\nRequest ID : " + data.Id +
+                                                                                        "\nStart Date : " + data.StartDate +
+                                                                                        "\nEnd Date : " + data.EndDate +
+                                                                                        "\nReason : " + data.ReasonRequest +
+                                                                                        "\nManager NIK : " + manager.NIK +
+                                                                                        "\nStatus : Has Been Approved" +
+                                                                                        "\nNotes : " + notes);
         }
-
-
 
         public void SendReject(Employee employee, int id, string notes)
         {
@@ -127,7 +165,7 @@ namespace LeaveRequest.Handler
             MailMessage message = new MailMessage(from, to);
 
             message.Subject = "Reset Password";
-            message.Body = "https://localhost:44350/Auth/Index \nToken : " + token;
+            message.Body = "Please akses this link for reset your password : https://localhost:44350/Auth/Index";
             SmtpClient smtpmail = new SmtpClient();
 
             NetworkCredential smtpusercredential = new NetworkCredential(SendEmail.Name, SendEmail.Value);

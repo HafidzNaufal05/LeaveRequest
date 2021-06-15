@@ -1,0 +1,432 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicons -->
+    <link href="~/img/mii.png" rel="icon">
+    <title>@ViewBag.Title</title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
+    <link href="~/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/jqueryui/jquery-ui.css" rel="stylesheet" />
+    <link href="~/lib/css-chart/css-chart.css" rel="stylesheet" />
+    <link href="~/scss/icons/material-design-iconic-font/css/materialdesignicons.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="~/css/style.css" rel="stylesheet" />
+    <!-- You can change the theme colors from here -->
+    <link href="~/css/colors/green.css" id="theme" rel="stylesheet" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-85622565-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script type="text/javascript">
+        function preventBack() {
+            window.history.forward();
+        }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
+</head>
+
+<body class="fix-header fix-sidebar card-no-border">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        <!-- Logo icon -->
+                        <!--<b>-->
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+                            <!-- <img src="~/img/OLMS-logo.png" alt="homepage" class="dark-logo" /> -->
+                        <!--</b>-->
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <!--<span>-->
+                            <!-- dark Logo text -->
+                            <!--<img src="~/img/leavemanagement.png" alt="homepage" class="dark-logo" />
+                        </span>-->
+                    </a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav mr-auto mt-md-0 ">
+                        <!-- This is  -->
+                        <li class="nav-item">
+                            <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark"
+                               href="javascript:void(0)"><i class="ti-menu"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark"
+                               href="javascript:void(0)"><i class="icon-arrow-left-circle"></i></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark"
+                               aria-haspopup="true" aria-expanded="false">
+                                <h2 style="font-weight:bold; color:white">Leave Management System</h2>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav my-lg-0">
+                        <li class="nav-item hidden-sm-down">
+                            <form class="app-search">
+                                <input type="text" class="form-control" placeholder="Search for..."> <a class="srh-btn"><i class="ti-search"></i></a>
+                            </form>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="~/img/OIP.jpg" class="profile-pic" alt="user">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                                <ul class="dropdown-user">
+                                    @*<li><a href="#"><i class="ti-user"></i> Edit Profile</a></li>*@
+                                    <li><a asp-controller="Employee" asp-action="ResetPassword"><i class="ti-wallet"></i> Change Password</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a id="Logout" asp-controller="Auth" asp-action="Logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <!-- UL ADMIN -->
+                    <div id="SectionAdmin">
+                        <ul id="sidebarnav">
+                            <li class="nav-small-cap">ADMIN</li>
+                            <li>
+                                <a asp-controller="Admin" asp-action="Dashboard" aria-expanded="false">
+                                    <i class="mdi mdi-view-dashboard"></i>
+                                    <span class="hide-menu">Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="has-arrow" aria-expanded="false">
+                                    <i class="mdi mdi-database"> </i><span class="hide-menu">Data</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li>
+                                        <a asp-controller="Admin" asp-action="Index">
+                                            <i class="mdi mdi-database-plus"> </i> Employee
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="Department" asp-action="Index">
+                                            <i class="mdi mdi-database-plus"> </i> Department
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="Position" asp-action="Index">
+                                            <i class="mdi mdi-database-plus"> </i> Position
+                                        </a>
+                                    </li>
+                                    <li hidden>
+                                        <a asp-controller="Role" asp-action="Index">
+                                            <i class="mdi mdi-database-plus"> </i> Role
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="AccountRole" asp-action="Index">
+                                            <i class="mdi mdi-database-plus"> </i> Set Role
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="NationalHoliday" asp-action="Index">
+                                            <i class="mdi mdi-database-plus"> </i> National Holiday
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a asp-controller="Request" asp-action="RequestList" aria-expanded="false">
+                                    <i class="mdi mdi-view-list"></i>
+                                    <span class="hide-menu">Request List</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="SectionEmployee">
+                        <ul id="sidebarnav">
+                            <li class="nav-devider"></li>
+                            <li class="nav-small-cap">EMPLOYEE</li>
+                            <li>
+                                <a asp-controller="Employee" asp-action="Dashboard" aria-expanded="false">
+                                    <i class="mdi mdi-view-dashboard"></i>
+                                    <span class="hide-menu">Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Employee" asp-action="Profile">
+                                    <i class="mdi mdi-account"></i>
+                                    <span class="hide-menu">Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Request" asp-action="Index">
+                                    <i class="mdi mdi-email-open"></i>
+                                    <span class="hide-menu">Send Request</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Request" asp-action="RequestHistory">
+                                    <i class="mdi mdi-history"></i>
+                                    <span class="hide-menu">History</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="SectionManager">
+                        <ul id="sidebarnav">
+                            <!-- Manager -->
+                            <li class="nav-small-cap">MANAGER</li>
+                            <li>
+                                <a asp-controller="Employee" asp-action="Dashboard" aria-expanded="false">
+                                    <i class="mdi mdi-view-dashboard"></i>
+                                    <span class="hide-menu">Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Employee" asp-action="Profile">
+                                    <i class="mdi mdi-account"></i>
+                                    <span class="hide-menu">Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Manager" asp-action="Index">
+                                    <i class="mdi mdi-arrange-bring-forward"></i>
+                                    <span class="hide-menu">Leave Approval</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Request" asp-action="Index">
+                                    <i class="mdi mdi-email-open"></i>
+                                    <span class="hide-menu">Send Request</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Request" asp-action="RequestHistory">
+                                    <i class="mdi mdi-history"></i>
+                                    <span class="hide-menu">History</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="SectionHR">
+                        <ul id="sidebarnav">
+                            <li class="nav-devider"></li>
+                            <!-- HR -->
+                            <li class="nav-small-cap">HR</li>
+                            <li>
+                                <a asp-controller="Employee" asp-action="Dashboard" aria-expanded="false">
+                                    <i class="mdi mdi-view-dashboard"></i>
+                                    <span class="hide-menu">Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Employee" asp-action="Profile">
+                                    <i class="mdi mdi-account"></i>
+                                    <span class="hide-menu">Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="HR" asp-action="Index">
+                                    <i class="mdi mdi-arrange-bring-forward"></i>
+                                    <span class="hide-menu">Leave Approval</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Request" asp-action="Index">
+                                    <i class="mdi mdi-email-open"></i>
+                                    <span class="hide-menu">Send Request</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Request" asp-action="RequestHistory">
+                                    <i class="mdi mdi-history"></i>
+                                    <span class="hide-menu">History</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+            <!-- Bottom points-->
+            <!-- End Bottom points-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <div class="row page-titles">
+                    <div class="col-md-6 col-8 align-self-center">
+                        <h3 class="text-themecolor m-b-0 m-t-0">@ViewBag.Title</h3>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                            <li class="breadcrumb-item active">@ViewBag.Title</li>
+                        </ol>
+                    </div>
+
+                </div>
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div>
+                    @RenderBody()
+                </div>
+            </div>
+            <footer class="footer">
+                © 2021 Online Leave Management System
+            </footer>
+        </div>
+    </div>
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/jqueryui/jquery-ui.js"></script>
+    <script src="~/lib/moment.js/moment.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    @* Add New *@
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
+    <a href="~/lib/popper.js/umd/popper.min.js.map"></a>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="~/js/jQuery-slimScroll/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="~/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="~/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="~/lib/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="~/js/custom.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
+    <script src="~/lib/styleswitcher/jQuery.style.switcher.js"></script>
+    <script>
+        //debugger;
+        var roles = sessionStorage.getItem("role");
+        if (roles == "Admin") {
+            $("#SectionEmployee").css("display", "none");
+            $("#SectionHR").css("display", "none");
+            $("#SectionManager").css("display", "none");
+        }
+        else if (roles == "HR") {
+            $("#SectionEmployee").css("display", "none");
+            $("#SectionAdmin").css("display", "none");
+            $("#SectionManager").css("display", "none");
+        }
+        else if (roles == "Manager") {
+            $("#SectionEmployee").css("display", "none");
+            $("#SectionAdmin").css("display", "none");
+            $("#SectionHR").css("display", "none");
+        }
+        else if (roles == "Employee") {
+            $("#SectionHR").css("display", "none");
+            $("#SectionAdmin").css("display", "none");
+            $("#SectionManager").css("display", "none");
+        }
+    </script>
+    <script>
+        //debugger;
+        $("Logout").click(function () {
+            console.log(sessionStorage.getItem())
+            sessionStorage.removeItem('token');
+            sessionStorage.clear();
+        });
+    </script>
+    @RenderSection("scripts")
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "font-awesome@5.15.3",
+      "destination": "wwwroot/font-awesome/"
+    },
+    {
+      "library": "jqueryui@1.12.1",
+      "destination": "wwwroot/lib"
+    },
+    {
+      "library": "datatables-buttons@2.2.0",
+      "destination": "wwwroot/lib/datatables-buttons/"
+    },
+    {
+      "library": "moment.js@2.29.1",
+      "destination": "wwwroot/lib/moment.js/"
+    },
+    {
+      "library": "popper.js@2.9.2",
+      "destination": "wwwroot/lib/bootstrap/dist/js/popper.js/"
+    },
+    {
+      "library": "jQuery-slimScroll@1.3.8",
+      "destination": "wwwroot/js/jQuery-slimScroll/"
+    }
+  ]
+}

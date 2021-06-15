@@ -48,7 +48,7 @@ namespace LeaveRequest.Controllers
 
             var dbparams = new DynamicParameters();
             dbparams.Add("EmployeeNIK", requestVM.EmployeeNIK, DbType.String);
-            dbparams.Add("LeaveCategory", requestVM.LeaveCategory, DbType.String);
+            //dbparams.Add("LeaveCategory", requestVM.LeaveCategory, DbType.String);
             dbparams.Add("StartDate", requestVM.StartDate, DbType.Date);
             dbparams.Add("EndDate", requestVM.EndDate, DbType.Date);
             dbparams.Add("ReasonRequest", requestVM.ReasonRequest, DbType.String);
@@ -57,6 +57,9 @@ namespace LeaveRequest.Controllers
             var result = Task.FromResult(dapper.Insert<int>("[dbo].[SP_Request]", dbparams, commandType: CommandType.StoredProcedure)).Result;
             if (result == 1)
             {
+                var sendEmail = new EmailRequest(myContext);
+                sendEmail.SendRequestEmployee(employee, requestVM);
+                sendEmail.SendRequestManager(manager, employee/*, request.Id*/, requestVM);
                 return Ok(new { Status = "Success", Message = "Request Has Been Add" });
             }
             else
@@ -71,10 +74,10 @@ namespace LeaveRequest.Controllers
         {
 
             var employee = myContext.Employees.Where(e => e.Email == approveVM.Email).FirstOrDefault();
-            var hrd = myContext.Employees.Where(e => e.NIK.Contains("1111")).FirstOrDefault();
+            var hrd = myContext.Employees.Where(e => e.NIK.Contains("1128")).FirstOrDefault();
 
             var data = myContext.Requests.Where(e => e.Id == approveVM.Id).FirstOrDefault();
-            var sendEmail = new EmailRequest(myContext);
+            
 
             if (data == null)
             {
@@ -89,8 +92,9 @@ namespace LeaveRequest.Controllers
                 dbparams.Add("Notes", approveVM.Notes, DbType.String);
 
                 var result = Task.FromResult(dapper.Insert<int>("[dbo].[SP_ApprovedManager]", dbparams, commandType: CommandType.StoredProcedure));
-
-                sendEmail.SendRequestHRD(hrd, employee, data.Id, approveVM.Notes);
+                
+                var sendEmail = new EmailRequest(myContext);
+                sendEmail.SendRequestHRD(hrd, employee, data.Id, data, approveVM.Notes);
                 return Ok(new { Status = "Success", Message = "Manager, Your Approved success" });
             }
 
@@ -109,7 +113,7 @@ namespace LeaveRequest.Controllers
         public ActionResult SubmitApprovedHRD(ApproveVM approveVM)
         {
             var employee = myContext.Employees.Where(e => e.Email == approveVM.Email).FirstOrDefault();
-            var hrd = myContext.Employees.Where(e => e.NIK.Contains("1111")).FirstOrDefault();
+            var hrd = myContext.Employees.Where(e => e.NIK.Contains("1128")).FirstOrDefault();
             var manager = myContext.Employees.Where(e => e.NIK == employee.NIK_Manager).FirstOrDefault();
 
             var data = myContext.Requests.Where(e => e.Id == approveVM.Id).FirstOrDefault();
@@ -132,7 +136,7 @@ namespace LeaveRequest.Controllers
                 var result = Task.FromResult(dapper.Insert<int>("[dbo].[SP_ApprovedHRD]", dbparams, commandType: CommandType.StoredProcedure));
                 
                 var sendEmail = new EmailRequest(myContext);
-                sendEmail.SendApproveHRD(manager, employee, data.Id, approveVM.Notes);
+                sendEmail.SendApproveHRD(manager, employee, data, approveVM.Notes);
                 return Ok(new { Status = "Success", Message = "HRD, Your Approved success" });
             }
             else
@@ -145,7 +149,7 @@ namespace LeaveRequest.Controllers
         public ActionResult SubmitApprovedHRD2(ApproveVM approveVM)
         {
             var employee = myContext.Employees.Where(e => e.Email == approveVM.Email).FirstOrDefault();
-            var hrd = myContext.Employees.Where(e => e.NIK.Contains("1111")).FirstOrDefault();
+            var hrd = myContext.Employees.Where(e => e.NIK.Contains("1128")).FirstOrDefault();
             var manager = myContext.Employees.Where(e => e.NIK == employee.NIK_Manager).FirstOrDefault();
 
             var data = myContext.Requests.Where(e => e.Id == approveVM.Id).FirstOrDefault();
@@ -168,7 +172,7 @@ namespace LeaveRequest.Controllers
                 var result = Task.FromResult(dapper.Insert<int>("[dbo].[SP_ApprovedHRD]", dbparams, commandType: CommandType.StoredProcedure));
 
                 var sendEmail = new EmailRequest(myContext);
-                sendEmail.SendApproveHRD(manager, employee, data.Id, approveVM.Notes);
+                sendEmail.SendApproveHRD(manager, employee, data, approveVM.Notes);
                 return Ok(new { Status = "Success", Message = "HRD, Your Approved success" });
             }
             else
@@ -250,7 +254,17 @@ namespace LeaveRequest.Controllers
         [HttpGet("GetRequestData")]
         public List<dynamic> GetRequestData()
         {
-            string query = string.Format("SELECT emp.NIK, req.* FROM TB_M_Employee AS emp INNER JOIN TB_T_Request AS req ON req.EmployeeNIK = emp.NIK");
+            string query = string.Format("SELECT * From TB_T_Request AS R FULL JOIN TB_M_Employee AS E ON R.EmployeeNIK = E.NIK WHERE(R.StatusRequest = 'Waiting') OR(R.StatusRequest = 'Approved by Manager')");
+
+            List<dynamic> get = dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
+
+            return get;
+        }
+
+        [HttpGet("GetApproveDataManager")]
+        public List<dynamic> GetApproveDataManager()
+        {
+            string query = string.Format("SELECT req.EmployeeNIK AS NIK,emp.Email, CONCAT(emp.FirstName,' ',emp.LastName) AS FullName, req.Id, req.LeaveCategory, req.StartDate, req.EndDate, req.ReasonRequest, req.Notes, req.StatusRequest FROM TB_M_Employee AS emp INNER JOIN TB_T_Request AS req ON req.EmployeeNIK = emp.NIK WHERE (req.StatusRequest = 'Waiting') OR (req.StatusRequest = 'Approved by Manager') OR (req.StatusRequest = 'Reject by Manager')");
 
             List<dynamic> get = dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
 
@@ -260,7 +274,7 @@ namespace LeaveRequest.Controllers
         [HttpGet("GetApproveData")]
         public List<dynamic> GetApproveData()
         {
-            string query = string.Format("SELECT req.EmployeeNIK AS NIK,emp.Email, CONCAT(emp.FirstName,' ',emp.LastName) AS FullName, req.Id, req.LeaveCategory, req.StartDate, req.EndDate, req.ReasonRequest, req.Notes, req.StatusRequest FROM TB_M_Employee AS emp INNER JOIN TB_T_Request AS req ON req.EmployeeNIK = emp.NIK");
+            string query = string.Format("SELECT req.EmployeeNIK AS NIK,emp.Email, CONCAT(emp.FirstName,' ',emp.LastName) AS FullName, req.Id, req.LeaveCategory, req.StartDate, req.EndDate, req.ReasonRequest, req.Notes, req.StatusRequest FROM TB_M_Employee AS emp INNER JOIN TB_T_Request AS req ON req.EmployeeNIK = emp.NIK WHERE (req.StatusRequest = 'Approved by Manager') OR (req.StatusRequest = 'Approved by HRD') OR (req.StatusRequest = 'Reject by HRD')");
 
             List<dynamic> get = dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
 
@@ -309,24 +323,24 @@ namespace LeaveRequest.Controllers
             }
         }
 
-        [HttpGet("GetHistroryRequest3")]
-        public IActionResult GetHistoryRequest3()
+        [HttpGet("GetHistoryRequest3")]
+        public List<dynamic> GetHistoryRequest3()
         {
-            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
-            var jwtReader = new JwtSecurityTokenHandler();
-            var jwt = jwtReader.ReadJwtToken(token);
+            //string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            //var jwtReader = new JwtSecurityTokenHandler();
+            //var jwt = jwtReader.ReadJwtToken(token);
 
-            var NIK = jwt.Claims.First(t => t.Type == "unique_name").Value;
+            //var NIK = jwt.Claims.First(t => t.Type == "unique_name").Value;
 
-            var getEmployee = myContext.Employees.Where(e => e.NIK == NIK).FirstOrDefault();
+            //var getEmployee = myContext.Employees.Where(e => e.NIK == NIK).FirstOrDefault();
 
             //var dbprams = new DynamicParameters();
             //dbprams.Add("NIK", getVM.NIK, DbType.String);
-            string query = string.Format("SELECT * From TB_T_Request AS R INNER JOIN TB_M_Employee AS E ON R.EmployeeNIK = E.NIK WHERE E.NIK = '" + getEmployee.NIK + "' AND (R.StatusRequest = 'Reject by Manager') OR(R.StatusRequest = 'Approve by HRD') OR(R.StatusRequest = 'Reject by HRD')");
+            string query = string.Format("SELECT E.NIK, R.*, E.RemainingQuota From TB_T_Request AS R INNER JOIN TB_M_Employee AS E ON R.EmployeeNIK = E.NIK WHERE (R.StatusRequest = 'Reject by Manager') OR (R.StatusRequest = 'Approved by HRD') OR (R.StatusRequest = 'Reject by HRD')");
 
             List<dynamic> result = dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
 
-            return Ok(result);
+            return result;
         }
     }
 }

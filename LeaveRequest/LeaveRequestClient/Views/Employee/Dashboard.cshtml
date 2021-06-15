@@ -1,0 +1,128 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row">
+    <!-- Column -->
+    <div class="col-md-6 col-lg-3 col-xlg-3">
+        <div class="card card-inverse card-warning">
+            <div class="box bg-warning text-center">
+                <h1 id="TotalRequest" class="font-light text-white">Loading...</h1>
+                <h6 class="text-white">Total Request</h6>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <div class="col-md-6 col-lg-3 col-xlg-3">
+        <div class="card card-primary card-info">
+            <div class="box bg-info text-center">
+                <h1 id="WaitingRequest" class="font-light text-white">Loading...</h1>
+                <h6 class="text-white">Waiting</h6>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <div class="col-md-6 col-lg-3 col-xlg-3">
+        <div class="card card-inverse card-success">
+            <div class="box text-center">
+                <h1 id="ApproveRequest" class="font-light text-white">Loading...</h1>
+                <h6 class="text-white">Approve</h6>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <div class="col-md-6 col-lg-3 col-xlg-3">
+        <div class="card card-inverse card-danger">
+            <div class="box text-center">
+                <h1 id="RejectRequest" class="font-light text-white">Loading...</h1>
+                <h6 class="text-white">Reject</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Column -->
+
+<div class="card-block">
+    <div class="card mx-auto" style="width:100%;">
+        <div id="ReasonRequest"></div>
+    </div>
+</div>
+
+    <script>
+        //debugger;
+        //var nik_employee = sessionStorage.getItem("nik");
+        // Total Request By Type
+        var options = {
+            series: [],
+            title: {
+                text: 'Total Leave Request',
+            },
+            chart: {
+                width: 600,
+                type: 'donut',
+            },
+            labels: [],
+            responsive: [{
+                breakpoint: 200,
+                options: {
+                    chart: {
+                        width: 600
+                    },
+                    legend: {
+                        position: "top",
+                        floating: true,
+                    }
+                }
+            }]
+        };
+        // ReasonRequestBy JS
+        var chart1 = new ApexCharts(document.querySelector("#ReasonRequest"), options);
+        chart1.render();
+        $.ajax({
+            url: "https://localhost:44338/api/Request/GetRequestData",
+            success: function (result) {
+                const obj = result.data.filter(nik => nik.niK_Employee === nik_employee);
+                const byLeaveType = []
+                obj.map(e => byLeaveType.push({ type: e.reasonRequest }))
+                const data = []
+                byLeaveType.map(val => {
+                    const index = data.findIndex(e => e.type == val.type)
+                    if (index < 0) {
+                        val.total = 1
+                        data.push(val)
+                    } else {
+                        data[index].total += 1
+                    }
+                });
+                const leaveType = []
+                const total = []
+                data.map(x => { total.push(x.total) });
+                data.map(x => { leaveType.push(x.type) });
+                chart1.updateOptions({
+                    series: total,
+                    labels: leaveType
+                })
+            }
+        })
+        //Card
+        var url = 'https://localhost:44338/api/Request/GetRequestData';
+        $.getJSON(url, function (result) {
+            var obj = result.data.filter(nik => nik.niK_Employee === nik_employee);
+            var status = obj.map(x => x.requestStatus);
+            function checkstatuswaiting(temp) {
+                return temp == undefined || temp == 3;
+            }
+            function checkstatus(temp) {
+                return temp == 1;
+            }
+            function checkstatusreject(temp) {
+                return temp == 2 || temp == 4;
+            }
+            $("#TotalRequest").text(obj.length);
+            $("#WaitingRequest").text(status.filter(checkstatuswaiting).length);
+            $("#ApproveRequest").text(status.filter(checkstatus).length);
+            $("#RejectRequest").text(status.filter(checkstatusreject).length);
+        })
+    </script>
+}

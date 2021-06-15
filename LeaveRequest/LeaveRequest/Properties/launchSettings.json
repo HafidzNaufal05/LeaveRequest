@@ -14,18 +14,17 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production"
-      },
-      "nativeDebugging": false
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     },
-    "LeaveRequestClient": {
+    "LeaveRequest": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production"
-      },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
 }

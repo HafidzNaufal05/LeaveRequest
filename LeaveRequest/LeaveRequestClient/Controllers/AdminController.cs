@@ -1,4 +1,5 @@
 ﻿using LeaveRequest.Models;
+using LeaveRequest.ViewModels;
 using LeaveRequestClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -26,12 +27,24 @@ namespace LeaveRequestClient.Controllers
         public IActionResult Index()
         {
             return View();
+        }        
+        public IActionResult Index2()
+        {
+            return View();
         }
 
         public IActionResult Privacy()
         {
             return View();
         }
+        //[HttpGet]
+        //public String Get(int Id)
+        //{
+        //    var httpClient = new HttpClient();
+        //    var response = httpClient.GetAsync("https://localhost:44338/api/Employee/" + Id).Result;
+        //    var apiResponse = response.Content.ReadAsStringAsync();
+        //    return apiResponse.Result;
+        //}
 
         [HttpPut]
         public HttpStatusCode UpdateRole(Employee employee)
@@ -39,6 +52,31 @@ namespace LeaveRequestClient.Controllers
             var httpClient = new HttpClient();
             StringContent content = new StringContent(JsonConvert.SerializeObject(employee), Encoding.UTF8, "application/json");
             var result = httpClient.PutAsync("https://localhost:44338/api/Request/SubmitRejectManager", content).Result;
+            return result.StatusCode;
+        }
+
+        [HttpGet]
+        public Employee Edit(string nik)
+        {
+            var client = new HttpClient();
+            var response = client.GetAsync("https://localhost:44338/api/Employee/" + nik).Result;
+            var apiResponse = response.Content.ReadAsStringAsync();
+            var data = JsonConvert.DeserializeObject<Employee>(apiResponse.Result);
+            return data;
+        }
+        [HttpDelete]
+        public HttpStatusCode Delete(string nik)
+        {
+            var httpClient = new HttpClient();
+            var response = httpClient.DeleteAsync("https://localhost:44338/api/Employee/" + nik).Result;
+            return response.StatusCode;
+        }
+        [HttpPut]
+        public HttpStatusCode Update(RegisterVM model)
+        {
+            var httpClient = new HttpClient();
+            StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            var result = httpClient.PutAsync("https://localhost:44338/api/Employee/", content).Result;
             return result.StatusCode;
         }
 

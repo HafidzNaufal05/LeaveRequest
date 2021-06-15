@@ -263,6 +263,7 @@
         .main {
             border-radius: 0px;
         }
+    }
 </style>
 
 @section scripts{
@@ -275,7 +276,7 @@
         console.log(currentLocation);
 
         if (retrievedObject != null) {
-            window.location.replace('https://localhost:44383' + retrievedObject.replace(/^"(.*)"$/, '$1'))
+            window.location.replace('https://localhost:44350' + retrievedObject.replace(/^"(.*)"$/, '$1'))
         }
 
         $(document).ready(function () {
